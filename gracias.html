@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Nos vemos pronto! | Cambalache Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --sf-blue:     #00A1E0;
+  --sf-dark:     #032d60;
+  --sf-navy:     #01162d;
+  --cyan:        #00ffcc;
+  --cyan-dim:    rgba(0,255,204,0.10);
+  --cyan-border: rgba(0,255,204,0.28);
+  --white:       #ffffff;
+  --body-text:   rgba(255,255,255,0.80);
+  --muted:       rgba(255,255,255,0.45);
+  --glass:       rgba(255,255,255,0.04);
+  --glass-b:     rgba(255,255,255,0.09);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--sf-navy);
+  color: var(--white);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── NAV ── */
+nav {
+  background: rgba(1,22,45,0.97);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--glass-b);
+  padding: 14px 0;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.navbar-brand { text-decoration: none; display: flex; align-items: center; }
+.navbar-brand img { height: 38px; }
+.navbar-partner { display: flex; align-items: center; }
+.navbar-partner img { height: 54px; margin-left: 8px; }
+
+/* ── MAIN ── */
+main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 40%, rgba(0,255,204,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 20% 80%, rgba(0,161,224,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.bg-grid {
+  position: absolute; inset: 0; opacity: 0.025;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 55px 55px;
+  pointer-events: none;
+}
+
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-b);
+  border-top: 3px solid var(--cyan);
+  border-radius: 20px;
+  padding: 52px 48px;
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  animation: fadeUp 0.6s ease both;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CHECK ICON ── */
+.check-wrap {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 2px solid var(--cyan-border);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px;
+  animation: popIn 0.5s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.check-wrap i {
+  font-size: 2rem;
+  color: var(--cyan);
+}
+
+/* ── EYEBROW ── */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cyan-dim); border: 1px solid var(--cyan-border);
+  border-radius: 50px; padding: 5px 14px; margin-bottom: 20px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--cyan);
+  animation: fadeUp 0.5s 0.2s ease both;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pdot 2s ease-in-out infinite;
+}
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.75);} }
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+h1 span { color: var(--cyan); }
+
+.subtitle {
+  font-size: 1.02rem;
+  color: var(--body-text);
+  line-height: 1.72;
+  margin-bottom: 36px;
+}
+
+/* ── STEPS ── */
+.next-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 36px;
+  text-align: left;
+}
+.ns-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  border-radius: 12px;
+  padding: 16px 18px;
+  animation: fadeUp 0.5s ease both;
+}
+.ns-item:nth-child(1) { animation-delay: 0.35s; }
+.ns-item:nth-child(2) { animation-delay: 0.45s; }
+.ns-item:nth-child(3) { animation-delay: 0.55s; }
+
+.ns-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(0,161,224,0.15);
+  border: 1px solid rgba(0,161,224,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800;
+  color: var(--sf-blue);
+  flex-shrink: 0; margin-top: 1px;
+}
+.ns-text h4 {
+  font-size: 0.92rem; font-weight: 700; margin-bottom: 3px;
+}
+.ns-text p {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--glass-b);
+  margin: 0 0 28px;
+}
+
+/* ── SOCIAL ── */
+.social-prompt {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.social-links {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.social-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: var(--glass); border: 1px solid var(--glass-b);
+  border-radius: 50px; padding: 8px 18px;
+  font-size: 0.82rem; font-weight: 600; color: var(--body-text);
+  text-decoration: none; transition: border-color 0.2s, color 0.2s;
+}
+.social-btn:hover { border-color: var(--sf-blue); color: var(--white); }
+.social-btn i { font-size: 0.9rem; }
+
+/* ── FOOTER ── */
+footer {
+  background: #010b16;
+  border-top: 1px solid var(--glass-b);
+  padding: 24px 0;
+  text-align: center;
+}
+footer p {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.22);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width: 600px) {
+  .card { padding: 36px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="img/logoctech.png" alt="Cambalache Logo">
+      <span class="navbar-partner">
+        <img src="img/partnerlogo.png" alt="Salesforce Partner Logo">
+      </span>
+    </a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
+  <div class="card">
+
+    <div class="check-wrap">
+      <i class="bi bi-check-lg"></i>
+    </div>
+
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Solicitud recibida
+    </div>
+
+    <h1>¡Gracias!<br>Nos ponemos<br>en contacto <span>muy pronto.</span></h1>
+
+    <p class="subtitle">
+      Recibimos tu solicitud correctamente. Un especialista de Cambalache Technologies va a contactarte en las próximas <strong style="color:var(--white);">24 horas hábiles</strong> para coordinar la demo.
+    </p>
+
+    <div class="next-steps">
+      <div class="ns-item">
+        <div class="ns-num">1</div>
+        <div class="ns-text">
+          <h4>Revisá tu email</h4>
+          <p>Te mandamos una confirmación a tu correo. Si no aparece en unos minutos, revisá la carpeta de spam.</p>
+        </div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">2</div>
+        <div class="ns-text">
+          <h4>Un especialista te va a escribir</h4>
+          <p>En menos de 24 horas hábiles vas a recibir un mensaje para coordinar la videollamada según tu disponibilidad.</p>
+        </div>
+      </div>
+      <div class="ns-item">
+        <div class="ns-num">3</div>
+        <div class="ns-text">
+          <h4>La demo es a medida de tu operación</h4>
+          <p>No es una presentación genérica — te mostramos Agentforce aplicado específicamente a tu industria y caso de uso.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Cambalache Technologies · Partner Consulting Salesforce Latam</p>
+</footer>
+
+</body>
+</html>
