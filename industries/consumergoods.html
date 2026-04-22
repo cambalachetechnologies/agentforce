@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentforce para Consumer Goods | Cambalache Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --sf-blue:     #00A1E0;
+  --sf-dark:     #032d60;
+  --sf-navy:     #01162d;
+  --cyan:        #00ffcc;
+  --cyan-dim:    rgba(0,255,204,0.10);
+  --cyan-border: rgba(0,255,204,0.28);
+  --white:       #ffffff;
+  --body-text:   rgba(255,255,255,0.80);
+  --muted:       rgba(255,255,255,0.45);
+  --glass:       rgba(255,255,255,0.04);
+  --glass-b:     rgba(255,255,255,0.09);
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--sf-navy); color: var(--white); overflow-x: hidden; }
+
+/* ── TOPBAR ── */
+.topbar { background: var(--sf-dark); font-size: 0.78rem; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.topbar .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+.topbar a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 16px; }
+.topbar a:hover { color: var(--cyan); }
+
+/* ── NAV ── */
+nav { position: sticky; top: 0; z-index: 99; background: rgba(1,22,45,0.95); backdrop-filter: blur(18px); border-bottom: 1px solid var(--glass-b); padding: 14px 0; }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.navbar-brand { text-decoration: none; display: flex; align-items: center; }
+.navbar-brand img { height: 38px; }
+.navbar-partner { display: flex; align-items: center; }
+.navbar-partner img { height: 54px; margin-left: 8px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta { background: var(--sf-blue); color: var(--white); border-radius: 50px; padding: 9px 22px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+.nav-cta:hover { background: #0084b8; transform: scale(1.02); }
+
+/* ── HERO ── */
+.hero { min-height: 90vh; display: flex; align-items: center; padding: 80px 0 60px; position: relative; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 70% at 65% 35%, rgba(0,161,224,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 15% 85%, rgba(0,255,204,0.06) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 55px 55px;
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 430px; gap: 56px; align-items: center; position: relative; z-index: 2; }
+
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-dim); border: 1px solid var(--cyan-border); border-radius: 50px; padding: 5px 14px; margin-bottom: 22px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); }
+.eyebrow-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pdot 2s ease-in-out infinite; }
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.75);} }
+
+.hero h1 { font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 22px; }
+.hero h1 em { font-style: normal; color: var(--cyan); display: block; }
+.hero-desc { font-size: 1.05rem; line-height: 1.72; color: var(--body-text); margin-bottom: 34px; max-width: 520px; }
+.hero-desc strong { color: var(--white); font-weight: 600; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { background: var(--sf-blue); color: var(--white); border-radius: 50px; padding: 13px 26px; font-size: 0.88rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: #0084b8; transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--white); border: 1px solid var(--glass-b); border-radius: 50px; padding: 13px 26px; font-size: 0.88rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-proof { margin-top: 44px; padding-top: 32px; border-top: 1px solid var(--glass-b); display: flex; gap: 36px; flex-wrap: wrap; }
+.proof-num { font-size: 2.2rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+.proof-label { font-size: 0.78rem; color: var(--muted); line-height: 1.45; margin-top: 4px; max-width: 115px; }
+
+/* ── FORM CARD ── */
+.form-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid var(--glass-b); border-top: 3px solid var(--sf-blue); border-radius: 16px; padding: 30px 26px; }
+.form-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+.form-card .form-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+.fg { margin-bottom: 10px; }
+.fg label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.fg input, .fg select { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-b); border-radius: 8px; padding: 9px 13px; color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.87rem; outline: none; transition: border-color 0.2s; appearance: none; }
+.fg input:focus, .fg select:focus { border-color: var(--sf-blue); }
+.fg input::placeholder { color: rgba(255,255,255,0.22); }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-submit { width: 100%; background: var(--sf-blue); color: var(--white); border: none; border-radius: 50px; padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; margin-top: 6px; transition: background 0.2s; }
+.btn-submit:hover { background: #0084b8; }
+.form-note { font-size: 0.71rem; color: var(--muted); text-align: center; margin-top: 8px; }
+
+/* ── SECTIONS ── */
+.sec { padding: 88px 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sec-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sf-blue); margin-bottom: 10px; }
+.sec h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 16px; }
+.sec h2 span { color: var(--cyan); }
+.sec-lead { font-size: 1.02rem; color: var(--body-text); line-height: 1.72; max-width: 620px; }
+.sec-alt { background: rgba(3,45,96,0.35); border-top: 1px solid var(--glass-b); border-bottom: 1px solid var(--glass-b); }
+
+/* ── LATAM ── */
+.latam { background: var(--sf-dark); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 32px 0; }
+.latam-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.latam-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); white-space: nowrap; }
+.cpills { display: flex; flex-wrap: wrap; gap: 8px; }
+.cpill { border: 1px solid var(--glass-b); border-radius: 50px; padding: 5px 14px; font-size: 0.82rem; color: var(--body-text); display: flex; align-items: center; gap: 7px; }
+.pdot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 7px var(--cyan); animation: pdot 2.2s ease-in-out infinite; }
+
+/* ── METRICS ── */
+.metrics { background: rgba(0,161,224,0.07); border-top: 1px solid rgba(0,161,224,0.15); border-bottom: 1px solid rgba(0,161,224,0.15); padding: 44px 0; }
+.metrics-grid { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; text-align: center; }
+.m-num { font-size: 2.8rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+.m-pct { font-size: 1.6rem; color: var(--sf-blue); }
+.m-label { font-size: 0.8rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+
+/* ── USE CASES TABS ── */
+.tabs-wrapper { margin-top: 50px; }
+.tab-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.tab-btn {
+  padding: 8px 20px; border-radius: 50px;
+  border: 1px solid var(--glass-b);
+  background: transparent; color: var(--muted);
+  font-family: 'Inter', sans-serif; font-size: 0.83rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.tab-btn:hover { border-color: var(--sf-blue); color: var(--white); }
+.tab-btn.active { background: var(--sf-blue); border-color: var(--sf-blue); color: var(--white); }
+.tab-pane { display: none; }
+.tab-pane.active { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.use-card { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 14px; padding: 26px 24px; display: flex; gap: 18px; align-items: flex-start; transition: border-color 0.25s, background 0.25s; }
+.use-card:hover { border-color: rgba(0,161,224,0.4); background: rgba(0,161,224,0.05); }
+.use-card.wide { grid-column: 1 / -1; }
+.use-n { font-size: 2rem; font-weight: 800; color: rgba(255,255,255,0.08); line-height: 1; flex-shrink: 0; min-width: 40px; transition: color 0.25s; }
+.use-card:hover .use-n { color: var(--sf-blue); }
+.use-body h4 { font-size: 0.97rem; font-weight: 700; margin-bottom: 7px; line-height: 1.25; }
+.use-body p { font-size: 0.83rem; color: var(--body-text); line-height: 1.62; }
+.use-tag { display: inline-block; margin-top: 10px; background: var(--cyan-dim); border: 1px solid var(--cyan-border); border-radius: 50px; padding: 3px 11px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--cyan); }
+
+/* ── ANALOGY (QUÉ ES) CARDS ── */
+.analogy-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 50px; }
+.a-card { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 14px; padding: 28px 24px; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; }
+.a-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--sf-blue), var(--cyan)); opacity: 0; transition: opacity 0.3s; }
+.a-card:hover { border-color: rgba(0,161,224,0.4); transform: translateY(-4px); }
+.a-card:hover::before { opacity: 1; }
+.a-num { font-size: 3.5rem; font-weight: 800; color: rgba(0,255,204,0.08); line-height: 1; position: absolute; top: 12px; right: 18px; }
+.a-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+.a-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+.a-card p { font-size: 0.85rem; color: var(--body-text); line-height: 1.65; }
+.a-highlight { display: block; margin-top: 14px; background: var(--cyan-dim); border-left: 3px solid var(--cyan); padding: 8px 12px; font-size: 0.8rem; color: var(--cyan); font-style: italic; line-height: 1.45; }
+
+/* ── BUILDING BLOCKS ── */
+.blocks-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 50px; }
+.block-card { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 14px; padding: 28px 24px; transition: border-color 0.25s, background 0.25s; }
+.block-card:hover { border-color: rgba(0,255,204,0.3); background: var(--cyan-dim); }
+.block-icon { font-size: 1.6rem; color: var(--sf-blue); margin-bottom: 14px; display: block; }
+.block-card h4 { font-size: 0.97rem; font-weight: 700; margin-bottom: 8px; }
+.block-card p { font-size: 0.83rem; color: var(--body-text); line-height: 1.62; }
+
+/* ── PROMOTION HIGHLIGHT ── */
+.promo-highlight {
+  margin-top: 50px;
+  background: linear-gradient(135deg, rgba(3,45,96,0.7) 0%, rgba(0,161,224,0.1) 100%);
+  border: 1px solid rgba(0,161,224,0.25);
+  border-left: 4px solid var(--sf-blue);
+  border-radius: 16px;
+  padding: 36px 32px;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 32px; align-items: center;
+}
+.promo-highlight h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; }
+.promo-highlight h3 span { color: var(--cyan); }
+.promo-highlight p { font-size: 0.9rem; color: var(--body-text); line-height: 1.7; }
+.promo-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+.promo-step { display: flex; align-items: center; gap: 10px; font-size: 0.84rem; color: var(--muted); }
+.promo-step i { color: var(--cyan); flex-shrink: 0; }
+
+/* ── STEPS ── */
+.steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 50px; border: 1px solid var(--glass-b); border-radius: 14px; overflow: hidden; }
+.step { padding: 30px 24px; border-right: 1px solid var(--glass-b); position: relative; }
+.step:last-child { border-right: none; }
+.step-n { font-size: 2.6rem; font-weight: 800; color: var(--sf-blue); line-height: 1; margin-bottom: 12px; }
+.step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 0.82rem; color: var(--muted); line-height: 1.58; }
+.step-arrow { position: absolute; right: -14px; top: 32px; width: 28px; height: 28px; border-radius: 50%; background: var(--sf-navy); border: 1px solid var(--sf-blue); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--sf-blue); z-index: 2; }
+
+/* ── FAQ ── */
+.faq-list { margin-top: 50px; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 12px; overflow: hidden; }
+.faq-q { width: 100%; background: none; border: none; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; text-align: left; color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 600; gap: 16px; transition: background 0.2s; }
+.faq-q:hover { background: rgba(255,255,255,0.03); }
+.faq-q i { color: var(--sf-blue); flex-shrink: 0; transition: transform 0.3s; }
+.faq-q.open i { transform: rotate(45deg); }
+.faq-a { display: none; padding: 0 24px 20px; font-size: 0.87rem; color: var(--body-text); line-height: 1.7; border-top: 1px solid var(--glass-b); padding-top: 16px; }
+.faq-a.open { display: block; }
+
+/* ── CTA FINAL ── */
+.cta-final { background: linear-gradient(135deg, rgba(3,45,96,0.8) 0%, rgba(0,161,224,0.08) 100%); border-top: 1px solid rgba(0,161,224,0.2); padding: 88px 0; }
+.cta-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: start; }
+.cta-left h2 { font-size: clamp(2rem,3.5vw,3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px; }
+.cta-left h2 span { color: var(--cyan); }
+.cta-left p { font-size: 1rem; color: var(--body-text); line-height: 1.7; margin-bottom: 26px; }
+.reassure { display: flex; flex-direction: column; gap: 8px; }
+.reassure-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--muted); }
+.reassure-row i { color: var(--cyan); font-size: 0.85rem; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer { background: #010b16; border-top: 1px solid var(--glass-b); padding: 52px 0 20px; }
+.foot-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+.foot-brand { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; }
+.foot-brand span { color: var(--cyan); }
+footer p, footer a { font-size: 0.83rem; color: var(--muted); text-decoration: none; line-height: 1.72; }
+footer a:hover { color: var(--sf-blue); }
+footer h5 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 14px; }
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 7px; }
+.foot-bottom { max-width: 1200px; margin: 0 auto; padding: 18px 24px 0; border-top: 1px solid var(--glass-b); font-size: 0.75rem; color: rgba(255,255,255,0.22); text-align: center; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:920px){
+  .hero-inner, .cta-inner { grid-template-columns: 1fr; }
+  .form-card.hero-fc { display: none; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .analogy-grid { grid-template-columns: 1fr; }
+  .tab-pane.active { grid-template-columns: 1fr; }
+  .use-card.wide { grid-column: auto; }
+  .blocks-grid { grid-template-columns: 1fr; }
+  .promo-highlight { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; border-radius: 14px; }
+  .step { border-right: none; border-bottom: 1px solid var(--glass-b); }
+  .step-arrow { display: none; }
+  .foot-inner { grid-template-columns: 1fr; gap: 24px; }
+  nav .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+    
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="../img/logoctech.png" alt="Cambalache Logo">
+      <span class="navbar-partner">
+        <img src="../img/partnerlogo.png" alt="Salesforce Partner Logo">
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#que-es">¿Qué es?</a></li>
+      <li><a href="#casos-uso">Casos de Uso</a></li>
+      <li><a href="#como-funciona">Cómo Funciona</a></li>
+      <li><a href="#faq">Preguntas</a></li>
+    </ul>
+    <a href="#demo" class="nav-cta">Hablar con un Especialista</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Agentforce · Consumer Goods Cloud
+      </div>
+      <h1>
+        Crecimiento rentable<br>con agentes de IA<br>
+        <em>para Consumer Goods.</em>
+      </h1>
+      <p class="hero-desc">
+        Automatizá los procesos clave de tu operación comercial — desde la planificación de promociones hasta la atención al cliente — con <strong>agentes de IA que trabajan 24/7</strong> dentro de Salesforce Consumer Goods Cloud.
+      </p>
+      <div class="hero-btns">
+        <a href="#demo" class="btn-primary"><i class="bi bi-play-circle-fill"></i> Ver demo en vivo</a>
+        <a href="#que-es" class="btn-ghost"><i class="bi bi-question-circle"></i> ¿Qué es Agentforce?</a>
+      </div>
+      <div class="hero-proof">
+        <div>
+          <div class="proof-num">+30</div>
+          <p class="proof-label">Vendedores mínimos en el target</p>
+        </div>
+        <div>
+          <div class="proof-num">24/7</div>
+          <p class="proof-label">Disponibilidad del agente de televentas</p>
+        </div>
+        <div>
+          <div class="proof-num">360°</div>
+          <p class="proof-label">Visibilidad del punto de venta</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card hero-fc" id="contacto">
+      <h3>Agendá una demo gratis</h3>
+      <p class="form-sub">Te mostramos Agentforce aplicado a tu operación de Consumer Goods. Sin compromiso.</p>
+      <form>
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+        </div>
+        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de tu empresa"></div>
+        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="nombre@empresa.com"></div>
+        <div class="fg">
+          <label>País</label>
+          <select>
+            <option value="">Seleccioná tu país</option>
+            <option>Argentina</option><option>México</option><option>Colombia</option>
+            <option>Chile</option><option>Perú</option><option>Uruguay</option>
+            <option>Ecuador</option><option>Panamá</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>¿Qué describe mejor tu empresa?</label>
+          <select>
+            <option value="">Seleccioná una opción</option>
+            <option>Marca CPG (Coca-Cola, Unilever, etc.)</option>
+            <option>Distribuidora</option>
+            <option>Retailer / Cadena de tiendas</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">QUIERO VER LA DEMO →</button>
+        <p class="form-note">Te respondemos en menos de 24 hs · Sin compromiso</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ ES -->
+<section class="sec" id="que-es">
+  <div class="wrap">
+    <p class="sec-label">Para entender de qué hablamos</p>
+    <h2>¿Qué es Agentforce<br><span>para Consumer Goods?</span></h2>
+    <p class="sec-lead">Agentforce es la plataforma de IA de Salesforce que crea asistentes digitales — agentes — capaces de hacer tareas por vos. En Consumer Goods, esos agentes conocen tu industria de adentro hacia afuera.</p>
+    <div class="analogy-grid">
+      <div class="a-card">
+        <span class="a-num">1</span>
+        <span class="a-icon"><i class="bi bi-shop"></i></span>
+        <h3>Conoce tu industria: rutas, PDV, distribuidoras, marcas</h3>
+        <p>No es un agente genérico. Viene pre-configurado con el conocimiento de cómo funciona Consumer Goods: visitas a tiendas, planogramas, promociones, pedidos y distribución.</p>
+        <span class="a-highlight">Como contratar a alguien que ya trabajó 10 años en la industria.</span>
+      </div>
+      <div class="a-card">
+        <span class="a-num">2</span>
+        <span class="a-icon"><i class="bi bi-graph-up-arrow"></i></span>
+        <h3>Toma decisiones basadas en tus datos reales de ventas</h3>
+        <p>Lee el historial de pedidos, las visitas previas, los productos con mejor rotación y las tendencias por zona. Hace recomendaciones que tienen sentido para tu negocio, no genéricas.</p>
+        <span class="a-highlight">Como un director comercial que conoce cada cuenta de memoria.</span>
+      </div>
+      <div class="a-card">
+        <span class="a-num">3</span>
+        <span class="a-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        <h3>Actúa: crea órdenes, agenda visitas, responde clientes</h3>
+        <p>No solo informa — ejecuta. Puede crear un pedido, agendar una visita, aprobar una devolución o enviar una cotización. Solo, sin que nadie tenga que intervenir para las tareas de rutina.</p>
+        <span class="a-highlight">Como pasar de "lo tengo que hacer yo" a "ya está hecho".</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASOS DE USO CON TABS -->
+<section class="sec sec-alt" id="casos-uso">
+  <div class="wrap">
+    <p class="sec-label">Casos de uso</p>
+    <h2>Agentforce aplicado a<br><span>cada área de tu operación</span></h2>
+    <p class="sec-lead">Casos de uso pre-construidos para Consumer Goods. Hacé clic en cada área para ver qué hace el agente.</p>
+
+    <div class="tabs-wrapper">
+      <div class="tab-btns">
+        <button class="tab-btn active" onclick="switchTab(this,'televentas')"><i class="bi bi-telephone me-1"></i>Televentas</button>
+        <button class="tab-btn" onclick="switchTab(this,'visitas')"><i class="bi bi-map me-1"></i>Gestión de Visitas</button>
+        <button class="tab-btn" onclick="switchTab(this,'servicio')"><i class="bi bi-headset me-1"></i>Atención al Cliente</button>
+        <button class="tab-btn" onclick="switchTab(this,'promociones')"><i class="bi bi-tag me-1"></i>Trade Promotion</button>
+      </div>
+
+      <!-- TELEVENTAS -->
+      <div class="tab-pane active" id="tab-televentas">
+        <div class="use-card">
+          <div class="use-n">01</div>
+          <div class="use-body">
+            <h4>Resumen instantáneo de la cuenta mientras hablás con el cliente</h4>
+            <p>El vendedor habla por teléfono y el agente le muestra en segundos: historial de compras, productos más vendidos, cumplimiento en PDV y tareas pendientes. Sin buscar en ningún sistema.</p>
+            <span class="use-tag">Resumen de Cuenta</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">02</div>
+          <div class="use-body">
+            <h4>Recomendaciones de upselling mientras tomás el pedido</h4>
+            <p>Basado en el historial de visitas y pedidos, el agente sugiere los 10 productos con mejor rotación para esa cuenta y arma la presentación de ventas. El vendedor solo tiene que leerla.</p>
+            <span class="use-tag">Upselling Inteligente</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">03</div>
+          <div class="use-body">
+            <h4>Programación de visitas desde la llamada</h4>
+            <p>El vendedor de televentas puede agendar y gestionar visitas de campo para una cuenta directamente durante la llamada, sin saltar entre sistemas ni pedirle a otro equipo que lo haga.</p>
+            <span class="use-tag">Gestión de Visitas</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">04</div>
+          <div class="use-body">
+            <h4>Creación de órdenes con barreras de reglas de negocio</h4>
+            <p>El agente guía al vendedor en la toma del pedido aplicando automáticamente las reglas: mínimos de compra, SKUs habilitados por cliente, descuentos permitidos. Sin errores manuales.</p>
+            <span class="use-tag">Creación de Órdenes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISITAS -->
+      <div class="tab-pane" id="tab-visitas">
+        <div class="use-card">
+          <div class="use-n">01</div>
+          <div class="use-body">
+            <h4>Rutas optimizadas automáticamente cada día</h4>
+            <p>El agente planifica las rutas diarias de cada vendedor o promotor, minimizando tiempos de traslado y maximizando la cantidad de tiendas visitadas. Sin armar planillas manualmente.</p>
+            <span class="use-tag">Optimización de Rutas</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">02</div>
+          <div class="use-body">
+            <h4>Auditorías de estantería con reconocimiento de imágenes</h4>
+            <p>El promotor saca una foto del estante y el agente (con Einstein Vision) detecta qué productos están, si se respeta el planograma y si hay faltantes de stock. En segundos, sin formularios.</p>
+            <span class="use-tag">Perfect Store</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">03</div>
+          <div class="use-body">
+            <h4>Sugerencias de pedido en el punto de venta</h4>
+            <p>Durante la visita, el agente dice: "Basado en tu historial, te conviene pedir 10 cajas más de este SKU esta semana". El promotor convierte la visita en una oportunidad de venta inmediata.</p>
+            <span class="use-tag">Venta Sugestiva</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">04</div>
+          <div class="use-body">
+            <h4>Check-in / check-out con geolocalización</h4>
+            <p>El gerente sabe en tiempo real qué tiendas fueron visitadas, cuánto tiempo estuvo el promotor en cada una y qué actividades ejecutó. Sin llamar a nadie para confirmar.</p>
+            <span class="use-tag">Trazabilidad de Campo</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICIO -->
+      <div class="tab-pane" id="tab-servicio">
+        <div class="use-card">
+          <div class="use-n">01</div>
+          <div class="use-body">
+            <h4>Consultas de estado de pedido resueltas solas</h4>
+            <p>Hasta el 50% de las llamadas al contact center son "¿dónde está mi pedido?". El agente responde eso solo, en cualquier canal, a cualquier hora. El equipo humano se enfoca en problemas reales.</p>
+            <span class="use-tag">Updates de Pedidos</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">02</div>
+          <div class="use-body">
+            <h4>Devoluciones y cambios gestionados sin intervención humana</h4>
+            <p>El agente guía al cliente en el proceso de devolución, aplica las políticas de la empresa y escala a un humano solo cuando hay una excepción. El proceso que antes tardaba días, tarda minutos.</p>
+            <span class="use-tag">Devoluciones y Cambios</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">03</div>
+          <div class="use-body">
+            <h4>Consultas de inventario para orientar las ventas</h4>
+            <p>Representantes y clientes pueden consultar la disponibilidad de productos por zona o depósito en tiempo real, directamente desde el chat o el teléfono. Sin llamar al depósito.</p>
+            <span class="use-tag">Consultas de Inventario</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">04</div>
+          <div class="use-body">
+            <h4>Administración de cuentas sin fricción</h4>
+            <p>Actualizaciones de datos de la cuenta, cambios de dirección de entrega o datos de contacto — el agente lo gestiona directamente con el cliente, sin que ningún operador tenga que intervenir.</p>
+            <span class="use-tag">Administración de Cuentas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROMOCIONES -->
+      <div class="tab-pane" id="tab-promociones">
+        <div class="use-card wide">
+          <div class="use-n">✦</div>
+          <div class="use-body">
+            <h4>Planificación de Trade Promotions de punta a punta</h4>
+            <p>Agentforce automatiza todo el proceso de planificación de promociones: genera insights de cuenta, recomienda qué tipo de promoción aplicar según el historial, crea la propuesta y la manda a aprobación. Lo que antes llevaba días de reuniones y planillas, ahora se hace en minutos.</p>
+            <span class="use-tag">Trade Promotion Management</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">01</div>
+          <div class="use-body">
+            <h4>Recomendación de promoción por cuenta y período</h4>
+            <p>El agente analiza el historial de ventas de la cuenta, el calendario de la categoría y las promociones anteriores para sugerir la mecánica y descuento óptimos.</p>
+            <span class="use-tag">Recomendaciones IA</span>
+          </div>
+        </div>
+        <div class="use-card">
+          <div class="use-n">02</div>
+          <div class="use-body">
+            <h4>Verificación de material POP en tienda</h4>
+            <p>El promotor fotografía el exhibidor o el poster y el agente verifica que el material POP esté instalado y sea el correcto para esa promoción. Evidencia automática sin trabajo administrativo.</p>
+            <span class="use-tag">Gestión de Material POP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO HIGHLIGHT -->
+<section class="sec">
+  <div class="wrap">
+    <p class="sec-label">Funcionalidad destacada</p>
+    <h2>Gestión de Trade Promotions<br><span>completamente automatizada</span></h2>
+    <p class="sec-lead">Una de las mayores cargas de trabajo en Consumer Goods. Agentforce la automatiza de principio a fin.</p>
+    <div class="promo-highlight">
+      <div>
+        <h3>Del Excel a la <span>IA proactiva</span> en cada cuenta</h3>
+        <p>El proceso manual de planificación de promociones involucra decenas de planillas, reuniones y aprobaciones por email. Agentforce convierte todo ese proceso en un flujo automático donde el agente genera, recomienda, crea y envía a aprobación — sin que el equipo toque una sola planilla.</p>
+        <div class="promo-steps">
+          <div class="promo-step"><i class="bi bi-1-circle-fill"></i> El agente genera insights de la cuenta: mejor período, productos clave, historial</div>
+          <div class="promo-step"><i class="bi bi-2-circle-fill"></i> Recomienda la mecánica de promoción óptima basada en datos históricos</div>
+          <div class="promo-step"><i class="bi bi-3-circle-fill"></i> Crea la propuesta de promoción con todos los detalles</div>
+          <div class="promo-step"><i class="bi bi-4-circle-fill"></i> La envía al canal de aprobación correspondiente automáticamente</div>
+        </div>
+      </div>
+      <div style="text-align:center; padding: 20px;">
+        <div style="font-size: 4rem; font-weight: 800; color: var(--cyan); line-height:1;">∞</div>
+        <p style="font-size:0.85rem; color:var(--muted); margin-top:8px; line-height:1.5;">Capacidad de procesamiento<br>sin límites de personal</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section class="sec sec-alt" id="como-funciona">
+  <div class="wrap">
+    <p class="sec-label">Los bloques de construcción</p>
+    <h2>¿Por qué Agentforce<br><span>entiende tu industria?</span></h2>
+    <p class="sec-lead">Agentforce para Consumer Goods no es un agente genérico. Viene con conocimiento profundo de la industria incorporado.</p>
+    <div class="blocks-grid">
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-building"></i></span>
+        <h4>Rol específico de la industria</h4>
+        <p>El agente entiende los workflows de Consumer Goods: rutas de vendedores, promotores, televentas, gestión de cuentas, distribuidoras. No hay que explicarle cómo funciona tu negocio.</p>
+      </div>
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-database-fill"></i></span>
+        <h4>Datos profundos de industria</h4>
+        <p>Conectado a tus datos de ventas, visitas, pedidos, inventario y promociones. Trabaja con la información real de tu empresa, no con datos genéricos.</p>
+      </div>
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-tools"></i></span>
+        <h4>Acciones pre-construidas listas para usar</h4>
+        <p>Vienen incluidas acciones específicas para CG: "Resumir cuenta", "Recomendar productos para upselling", "Programar visita", "Crear promoción", "Verificar planograma".</p>
+      </div>
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-plug-fill"></i></span>
+        <h4>Integración con cualquier sistema externo</h4>
+        <p>Se conecta con tu ERP, sistemas de distribución, BI y cualquier fuente de datos vía MuleSoft. La información fluye en tiempo real entre todos los sistemas.</p>
+      </div>
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-puzzle-fill"></i></span>
+        <h4>Templates pre-construidos, sin empezar de cero</h4>
+        <p>No hay que construir desde cero. Los casos de uso de Consumer Goods vienen con plantillas listas. Se personalizan con código bajo para adaptarse a tus procesos específicos.</p>
+      </div>
+      <div class="block-card">
+        <span class="block-icon"><i class="bi bi-shield-lock-fill"></i></span>
+        <h4>Seguridad con Einstein Trust Layer</h4>
+        <p>Todos los datos pasan por el Einstein Trust Layer de Salesforce: la información de tu empresa nunca se usa para entrenar modelos externos. Cumplimiento regulatorio incorporado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec sec-alt" id="faq">
+  <div class="wrap">
+    <p class="sec-label">Preguntas frecuentes</p>
+    <h2>Lo que nos preguntan<br><span>las empresas de CG</span></h2>
+    <p class="sec-lead">Las dudas más comunes antes de implementar Agentforce en una operación de Consumer Goods.</p>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué es un agente de IA para Consumer Goods?
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="faq-a">
+          Un agente de IA para Consumer Goods es un software que usa inteligencia artificial para automatizar tareas de ventas y operaciones. Puede analizar datos de ventas y visitas, automatizar la toma de pedidos, gestionar promociones y brindar atención al cliente — todo solo, sin intervención humana en las tareas de rutina. Permite a las empresas reducir costos operativos, aumentar la eficiencia del equipo comercial y tomar mejores decisiones basadas en datos reales.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Reemplaza a mis vendedores y promotores?
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="faq-a">
+          No. Agentforce libera a tu equipo de las tareas repetitivas y de bajo valor — como buscar información, completar formularios o responder preguntas de estado de pedido — para que puedan enfocarse en lo que genera más valor: construir relaciones, negociar, y tomar decisiones estratégicas. El agente maneja el trabajo de rutina; las personas hacen el trabajo de alto impacto.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Se conecta con mi ERP y sistemas actuales?
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="faq-a">
+          Sí. A través de MuleSoft, Agentforce se integra con cualquier sistema: SAP, Oracle, sistemas de distribución propietarios, BI y cualquier fuente de datos. La información fluye en tiempo real entre Salesforce y tus sistemas existentes. No es necesario reemplazar nada de lo que ya tenés funcionando.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Cuánto tiempo lleva implementar Agentforce?
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="faq-a">
+          Depende del alcance, pero gracias a los templates pre-construidos para Consumer Goods, los primeros casos de uso pueden estar funcionando en pocas semanas. En Cambalache tenemos metodología probada para implementaciones ágiles: empezamos por los casos de mayor impacto y vamos expandiendo con base en resultados reales.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué pasa con la seguridad de mis datos de ventas?
+          <i class="bi bi-plus-lg"></i>
+        </button>
+        <div class="faq-a">
+          Salesforce incluye el Einstein Trust Layer, una capa de seguridad que garantiza que la información de tu empresa nunca se usa para entrenar modelos de IA externos. Tus datos de clientes, ventas y promociones permanecen privados y bajo tu control, cumpliendo con las regulaciones de privacidad aplicables en cada país de Latinoamérica.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="demo">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="eyebrow" style="margin-bottom:18px;">
+        <span class="eyebrow-dot"></span>Sin compromiso
+      </div>
+      <h2>¿Listo para ver<br>Agentforce en<br><span>tu operación de CG?</span></h2>
+      <p>Te mostramos una demo con casos de uso reales de Consumer Goods: televentas, visitas, promociones y atención al cliente — todo funcionando con IA.</p>
+      <div class="reassure">
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Demo gratuita y sin compromiso</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> 45 minutos por videollamada con un especialista en CG</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Te mostramos casos reales de la industria</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Respondemos en menos de 24 horas hábiles</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Sin jerga técnica — explicamos en términos de negocio</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <h3>Pedí tu demo</h3>
+      <p class="form-sub">Completá el formulario y coordinamos la videollamada.</p>
+      <form>
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+        </div>
+        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
+        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="vos@empresa.com"></div>
+        <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+54 9 11..."></div>
+        <div class="fg">
+          <label>¿Qué área te interesa automatizar primero?</label>
+          <select>
+            <option value="">Seleccioná una opción</option>
+            <option>Televentas y toma de pedidos</option>
+            <option>Gestión de visitas y rutas</option>
+            <option>Atención al cliente y posventa</option>
+            <option>Trade Promotions</option>
+            <option>Auditorías de PDV (Perfect Store)</option>
+            <option>Varias áreas / Quiero hablar primero</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">QUIERO LA DEMO GRATIS →</button>
+        <p class="form-note">Sin compromiso · Respondemos en &lt;24 hs hábiles</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">Cambalache<span>.</span>tech</div>
+      <p>Partner Consulting Regional de Salesforce. Especialistas en Consumer Goods Cloud y Agentforce para Latinoamérica.</p>
+      <p style="margin-top:12px;">josefina.ceriani@c-tech.com.ar</p>
+      <p>Buenos Aires · Bogotá · Santiago</p>
+    </div>
+    <div>
+      <h5>Soluciones</h5>
+      <ul>
+        <li><a href="#">Agentforce para CG</a></li>
+        <li><a href="#">Consumer Goods Cloud</a></li>
+        <li><a href="#">Agentforce Field Service</a></li>
+        <li><a href="#">Sales Cloud CRM</a></li>
+        <li><a href="#">MuleSoft</a></li>
+        <li><a href="#">Data Cloud</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Industrias</h5>
+      <ul>
+        <li><a href="#">Consumer Goods (CPG)</a></li>
+        <li><a href="#">Distribución</a></li>
+        <li><a href="#">Retail</a></li>
+        <li><a href="#">Manufactura</a></li>
+        <li><a href="#">Agriculture</a></li>
+        <li><a href="#">Health Care</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    © 2026 Cambalache Technologies · Partner Consulting Salesforce Latam · Salesforce, Agentforce y Consumer Goods Cloud son marcas registradas de Salesforce, Inc.
+  </div>
+</footer>
+
+<script>
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+  if (!isOpen) {
+    answer.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+</script>
+
+</body>
+</html>
