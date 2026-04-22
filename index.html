@@ -1,337 +1,587 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cambalache Technologies | Salesforce Partner Regional Latam</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agentforce para tu negocio | Cambalache Technologies · Salesforce Partner Latam</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-    <style>
-        :root {
-            --sf-blue: #00A1E0;
-            --sf-dark: #032d60;
-            --agent-purple: #6a11cb;
-            --agent-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            --soft-bg: #f4f7f9;
-            --text-cyan: #00ffcc;
-        }
+:root {
+  --sf-blue:     #00A1E0;
+  --sf-dark:     #032d60;
+  --sf-navy:     #01162d;
+  --cyan:        #00ffcc;
+  --cyan-dim:    rgba(0,255,204,0.10);
+  --cyan-border: rgba(0,255,204,0.28);
+  --white:       #ffffff;
+  --body-text:   rgba(255,255,255,0.80);
+  --muted:       rgba(255,255,255,0.45);
+  --glass:       rgba(255,255,255,0.04);
+  --glass-b:     rgba(255,255,255,0.09);
+}
 
-        body { font-family: 'Inter', sans-serif; color: #2d3436; background-color: #fff; scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--sf-navy); color: var(--white); overflow-x: hidden; }
 
-        /* --- Navbar --- */
-        .top-bar { background: var(--sf-dark); color: white; font-size: 0.8rem; padding: 5px 0; }
-        .top-bar a { color: white; text-decoration: none; margin-left: 15px; opacity: 0.8; }
-        .navbar { padding: 15px 0; background: rgba(255,255,255,0.98); }
-        .navbar-brand img { height: 40px; }
-        .nav-link { font-weight: 600; color: var(--sf-dark) !important; font-size: 0.95rem; }
-        .navbar-partner img {
-            height: 60px;
-            margin-left: 10px;
-        }
+/* ── TOPBAR ── */
+.topbar { background: var(--sf-dark); font-size: 0.78rem; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.topbar .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+.topbar a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 16px; transition: color 0.2s; }
+.topbar a:hover { color: var(--cyan); }
 
-        /* --- Hero & Form --- */
-        .hero-section {
-            background: linear-gradient(135deg, rgba(3, 45, 96, 0.9) 0%, rgba(0, 161, 224, 0.7) 100%), 
-                        url('https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&q=80');
-            background-size: cover; padding: 100px 0; color: white; min-height: 85vh; display: flex; align-items: center;
-        }
-        .hero-form { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); color: #333; }
-        .hero-form .form-control { border-radius: 8px; font-size: 0.9rem; padding: 8px 12px; margin-bottom: 8px; }
-        .hero-form label { font-size: 0.75rem; font-weight: 700; color: var(--sf-dark); margin-bottom: 2px; display: block; }
+/* ── NAV ── */
+nav { position: sticky; top: 0; z-index: 99; background: rgba(1,22,45,0.96); backdrop-filter: blur(18px); border-bottom: 1px solid var(--glass-b); padding: 14px 0; }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+.navbar-brand { text-decoration: none; display: flex; align-items: center; }
+.navbar-brand img { height: 38px; }
+.navbar-partner { display: flex; align-items: center; }
+.navbar-partner img { height: 54px; margin-left: 8px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 0.85rem; font-weight: 600; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta { background: var(--sf-blue); color: var(--white); border-radius: 50px; padding: 9px 22px; font-size: 0.82rem; font-weight: 700; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+.nav-cta:hover { background: #0084b8; transform: scale(1.02); }
 
-        /* --- Presencia --- */
-        .presence-dark { background: #01162d; color: white; padding: 60px 0; }
-        .pulse-dot {
-            height: 8px; width: 8px; background-color: var(--text-cyan); border-radius: 50%;
-            display: inline-block; margin-right: 8px; box-shadow: 0 0 10px var(--text-cyan);
-            animation: pulse-animation 2s infinite;
-        }
-        @keyframes pulse-animation {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
-        }
+/* ── HERO ── */
+.hero { min-height: 92vh; display: flex; align-items: center; padding: 90px 0 60px; position: relative; overflow: hidden; }
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 65% 65% at 70% 35%, rgba(0,161,224,0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 55% at 10% 80%, rgba(0,255,204,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(3,45,96,0.5) 0%, transparent 70%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 55px 55px;
+}
+.hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 430px; gap: 56px; align-items: center; position: relative; z-index: 2; }
 
-        /* --- Agentforce & SNAKE BORDER --- */
-        .agentforce-universe { background: radial-gradient(circle at top right, #051937, #000); color: white; padding: 100px 0; }
-        .agent-card-tech {
-            position: relative; background: #051124; border-radius: 20px; padding: 30px; 
-            height: 100%; transition: 0.4s; overflow: hidden; display: flex; flex-direction: column; justify-content: center; z-index: 1;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .agent-card-tech::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--text-cyan));
-            animation: rotate-snake 4s linear infinite; z-index: -2; opacity: 0; transition: opacity 0.3s;
-        }
-        .agent-card-tech::after { content: ''; position: absolute; inset: 2px; background: #051124; border-radius: 18px; z-index: -1; }
-        .agent-card-tech:hover::before { opacity: 1; }
-        @keyframes rotate-snake { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-dim); border: 1px solid var(--cyan-border); border-radius: 50px; padding: 5px 14px; margin-bottom: 22px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cyan); }
+.eyebrow-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 8px var(--cyan); animation: pdot 2s ease-in-out infinite; }
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.75);} }
 
-        .nav-pills-agent .nav-link {
-            color: #ffffff !important; border-radius: 50px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); text-align: left; transition: 0.3s;
-        }
-        .nav-pills-agent .nav-link.active { background: var(--sf-blue) !important; color: white !important; border-color: var(--sf-blue); }
+.hero h1 { font-size: clamp(2.6rem, 5vw, 4.4rem); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 22px; }
+.hero h1 em { font-style: normal; color: var(--cyan); display: block; }
+.hero-desc { font-size: 1.05rem; line-height: 1.72; color: var(--body-text); margin-bottom: 34px; max-width: 520px; }
+.hero-desc strong { color: var(--white); font-weight: 600; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary { background: var(--sf-blue); color: var(--white); border-radius: 50px; padding: 13px 26px; font-size: 0.88rem; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-primary:hover { background: #0084b8; transform: translateY(-1px); }
+.btn-ghost { background: transparent; color: var(--white); border: 1px solid var(--glass-b); border-radius: 50px; padding: 13px 26px; font-size: 0.88rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
 
-        /* --- Expertís --- */
-        .service-card { border: none; border-radius: 15px; transition: 0.3s; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); height: 100%; display: flex; flex-direction: column; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .service-icon { font-size: 2.5rem; color: var(--sf-blue); margin-bottom: 15px; display: block; }
-        .btn-discover { color: var(--sf-blue); font-weight: 700; text-decoration: none; font-size: 0.85rem; margin-top: auto; transition: 0.3s; display: inline-block; text-transform: uppercase; }
-        .btn-discover:hover { color: var(--sf-dark); padding-left: 5px; }
+/* ── FORM CARD ── */
+.form-card { background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); border: 1px solid var(--glass-b); border-top: 3px solid var(--sf-blue); border-radius: 16px; padding: 30px 26px; }
+.form-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+.form-card .form-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+.fg { margin-bottom: 10px; }
+.fg label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.fg input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid var(--glass-b); border-radius: 8px; padding: 9px 13px; color: var(--white); font-family: 'Inter', sans-serif; font-size: 0.87rem; outline: none; transition: border-color 0.2s; }
+.fg input:focus { border-color: var(--sf-blue); }
+.fg input::placeholder { color: rgba(255,255,255,0.22); }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-submit { width: 100%; background: var(--sf-blue); color: var(--white); border: none; border-radius: 50px; padding: 12px; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; margin-top: 6px; transition: background 0.2s; }
+.btn-submit:hover { background: #0084b8; }
+.form-note { font-size: 0.71rem; color: var(--muted); text-align: center; margin-top: 8px; }
 
-        /* --- Footer --- */
-        footer { background: #010b16; color: #a0aec0; padding: 60px 0 20px; }
-        footer h5 { color: white; font-weight: 700; margin-bottom: 20px; }
-        footer a { color: #a0aec0; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-        footer a:hover { color: var(--sf-blue); }
+/* ── LATAM ── */
+.latam { background: var(--sf-dark); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 32px 0; }
+.latam-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.latam-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); white-space: nowrap; }
+.cpills { display: flex; flex-wrap: wrap; gap: 8px; }
+.cpill { border: 1px solid var(--glass-b); border-radius: 50px; padding: 5px 14px; font-size: 0.82rem; color: var(--body-text); display: flex; align-items: center; gap: 7px; }
+.pdot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 7px var(--cyan); animation: pdot 2.2s ease-in-out infinite; }
 
-        .btn-sf { background: var(--sf-blue); color: white; border-radius: 50px; padding: 12px 25px; font-weight: 700; border: none; transition: 0.3s; }
-        .btn-sf:hover { background: #0084b8; color: white; transform: scale(1.02); }
-    </style>
+/* ── SECTIONS ── */
+.sec { padding: 88px 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sec-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sf-blue); margin-bottom: 10px; display: block; }
+.sec h2 { font-size: clamp(1.9rem, 3.2vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 16px; }
+.sec h2 span { color: var(--cyan); }
+.sec-lead { font-size: 1.02rem; color: var(--body-text); line-height: 1.72; max-width: 620px; }
+.sec-alt { background: rgba(3,45,96,0.35); border-top: 1px solid var(--glass-b); border-bottom: 1px solid var(--glass-b); }
+
+/* ── QUÉ ES: TAB SECTION ── */
+.tab-layout { display: grid; grid-template-columns: 240px 1fr; gap: 32px; margin-top: 50px; align-items: start; }
+.tab-pills { display: flex; flex-direction: column; gap: 8px; }
+.tab-pill { background: transparent; border: 1px solid var(--glass-b); border-radius: 50px; padding: 11px 20px; font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--muted); cursor: pointer; text-align: left; transition: all 0.2s; }
+.tab-pill:hover { border-color: var(--sf-blue); color: var(--white); }
+.tab-pill.active { background: var(--sf-blue); border-color: var(--sf-blue); color: var(--white); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.agent-card {
+  background: rgba(5,17,36,0.8); border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 20px; padding: 36px 32px;
+  position: relative; overflow: hidden;
+}
+.agent-card::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: conic-gradient(transparent, transparent, transparent, var(--cyan));
+  animation: snake 4s linear infinite; z-index: 0; opacity: 0; transition: opacity 0.3s;
+}
+.agent-card::after { content: ''; position: absolute; inset: 2px; background: rgba(5,17,36,0.95); border-radius: 18px; z-index: 1; }
+.agent-card:hover::before { opacity: 1; }
+.agent-card-inner { position: relative; z-index: 2; }
+@keyframes snake { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+.agent-card h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--cyan); }
+.agent-card p { font-size: 0.9rem; color: var(--body-text); line-height: 1.7; margin-bottom: 24px; }
+.agent-bullets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.agent-bullet { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted); }
+.agent-bullet::before { content: ''; width: 3px; height: 28px; background: var(--cyan); border-radius: 2px; flex-shrink: 0; }
+
+/* ── SOLUCIONES ── */
+.solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 50px; }
+.sol-card { background: var(--white); border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; transition: transform 0.25s, box-shadow 0.25s; }
+.sol-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.25); }
+.sol-icon { font-size: 2.2rem; color: var(--sf-blue); margin-bottom: 14px; display: block; }
+.sol-card h4 { font-size: 1rem; font-weight: 700; color: #032d60; margin-bottom: 8px; }
+.sol-card p { font-size: 0.83rem; color: #636e72; line-height: 1.6; flex: 1; }
+.sol-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 16px; font-size: 0.78rem; font-weight: 700; color: var(--sf-blue); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; transition: gap 0.2s; }
+.sol-link:hover { gap: 9px; color: #032d60; }
+
+/* ── CÓMO FUNCIONA ── */
+.steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-top: 50px; border: 1px solid var(--glass-b); border-radius: 14px; overflow: hidden; }
+.step { padding: 30px 24px; border-right: 1px solid var(--glass-b); position: relative; }
+.step:last-child { border-right: none; }
+.step-n { font-size: 2.6rem; font-weight: 800; color: var(--sf-blue); line-height: 1; margin-bottom: 12px; }
+.step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 0.82rem; color: var(--muted); line-height: 1.58; }
+.step-arrow { position: absolute; right: -14px; top: 32px; width: 28px; height: 28px; border-radius: 50%; background: var(--sf-navy); border: 1px solid var(--sf-blue); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: var(--sf-blue); z-index: 2; }
+
+/* ── INDUSTRIES ── */
+.ind-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-top: 50px; }
+.ind-card { background: var(--glass); border: 1px solid var(--glass-b); border-radius: 12px; padding: 22px 18px; transition: border-color 0.25s, background 0.25s; text-align: center; }
+.ind-card:hover { border-color: rgba(0,255,204,0.3); background: var(--cyan-dim); }
+.ind-icon { font-size: 1.8rem; display: block; margin-bottom: 10px; }
+.ind-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+.ind-card p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* ── CTA FINAL ── */
+.cta-final { background: linear-gradient(135deg, rgba(3,45,96,0.8) 0%, rgba(0,161,224,0.08) 100%); border-top: 1px solid rgba(0,161,224,0.2); padding: 88px 0; }
+.cta-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: start; }
+.cta-left h2 { font-size: clamp(2rem,3.5vw,3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px; }
+.cta-left h2 span { color: var(--cyan); }
+.cta-left p { font-size: 1rem; color: var(--body-text); line-height: 1.7; margin-bottom: 26px; }
+.reassure { display: flex; flex-direction: column; gap: 8px; }
+.reassure-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--muted); }
+.reassure-row i { color: var(--cyan); font-size: 0.85rem; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer { background: #010b16; border-top: 1px solid var(--glass-b); padding: 52px 0 20px; }
+.foot-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+footer p, footer a { font-size: 0.83rem; color: var(--muted); text-decoration: none; line-height: 1.72; }
+footer a:hover { color: var(--sf-blue); }
+footer h5 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 14px; }
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 7px; }
+.foot-bottom { max-width: 1200px; margin: 0 auto; padding: 18px 24px 0; border-top: 1px solid var(--glass-b); font-size: 0.75rem; color: rgba(255,255,255,0.22); text-align: center; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  .hero-inner, .cta-inner { grid-template-columns: 1fr; }
+  .form-card.hero-fc { display: none; }
+  .tab-layout { grid-template-columns: 1fr; }
+  .solutions-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; }
+  .step { border-right: none; border-bottom: 1px solid var(--glass-b); }
+  .step-arrow { display: none; }
+  .ind-grid { grid-template-columns: 1fr 1fr; }
+  .foot-inner { grid-template-columns: 1fr; gap: 24px; }
+  nav .nav-links { display: none; }
+}
+@media(max-width:600px){
+  .solutions-grid, .ind-grid { grid-template-columns: 1fr; }
+  .agent-bullets { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
 
-    <div class="top-bar d-none d-lg-block">
-        <div class="container d-flex justify-content-between">
-            <div><i class="bi bi-globe-americas me-2"></i> Partner Regional Salesforce - Presencia en toda Latinoamérica</div>
-            <div>
-                <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a>
-                <a href="#"><i class="bi bi-youtube"></i> YouTube</a>
-                <a href="#"><i class="bi bi-envelope"></i> Contacto</a>
-            </div>
-        </div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="wrap">
+    <span><i class="bi bi-globe-americas me-2"></i>Partner Regional Salesforce · Presencia en toda Latinoamérica</span>
+    <div>
+      <a href="#"><i class="bi bi-linkedin me-1"></i>LinkedIn</a>
+      <a href="#"><i class="bi bi-youtube me-1"></i>YouTube</a>
+      <a href="#demo"><i class="bi bi-envelope me-1"></i>Contacto</a>
     </div>
+  </div>
+</div>
 
-  <nav class="navbar navbar-expand-lg bg-white shadow-sm fixed-top">
-    <div class="container d-flex align-items-center">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="img/logoctech.png" alt="Cambalache Logo">
-        <span class="navbar-partner">
-          <img src="img/partnerlogo.png" alt="Salesforce Partner Logo">
-        </span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="#agentforce">Agentforce</a></li>
-          <li class="nav-item"><a class="nav-link" href="#soluciones">Soluciones</a></li>
-          <li class="nav-item"><a class="nav-link" href="#header">Contacto</a></li>
-        </ul>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="navbar-brand" href="#">
+      <img src="img/logoctech.png" alt="Cambalache Logo">
+      <span class="navbar-partner">
+        <img src="img/partnerlogo.png" alt="Salesforce Partner Logo">
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#agentforce">Agentforce</a></li>
+      <li><a href="#soluciones">Soluciones</a></li>
+      <li><a href="#industrias">Industrias</a></li>
+    </ul>
+    <a href="#demo" class="nav-cta">Consultoría sin cargo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner wrap">
+    <div>
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        IA Partner Consulting · Salesforce Latam
+      </div>
+      <h1>
+        Implementá Agentforce<br>y creá agentes de IA<br>
+        <em>para tu negocio.</em>
+      </h1>
+      <p class="hero-desc">
+        Automatizá ventas, atención al cliente y procesos internos con <strong>agentes de inteligencia artificial</strong> conectados a Salesforce — y a todos tus sistemas existentes.
+      </p>
+      <div class="hero-btns">
+        <a href="#demo" class="btn-primary"><i class="bi bi-calendar-check"></i> Consultoría sin cargo</a>
+        <a href="#agentforce" class="btn-ghost"><i class="bi bi-play-circle"></i> Ver qué es Agentforce</a>
       </div>
     </div>
-  </nav>
 
-<header id="header" class="hero-section">
-            <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
-                    <span class="badge rounded-pill mb-3 px-3 py-2" style="background: rgba(255,255,255,0.2); border: 1px solid white;">IA Partner Consulting Salesforce Latam</span>
-                    <h1 class="display-4 fw-800 mb-3">Implementa Agentforce de Salesforce<br><span style="color: var(--text-cyan);">y crea agentes de IA para tu negocio </span></h1>
-                    <p class="lead mb-4">Automatiza ventas, atención al cliente y procesos internos con agentes de inteligencia artificial conectados a Salesforce.</p>
-                </div>
-                <div class="col-lg-6">
-                    <div id="contacto-hero" class="hero-form">
-                        <h4 class="fw-bold mb-3 text-center">Consultoría sin cargo</h4>
-                        <form class="row g-2">
-                            <div class="col-md-6">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" placeholder="Nombre" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label>Apellido</label>
-                                <input type="text" class="form-control" placeholder="Apellido" required>
-                            </div>
-                            <div class="col-12">
-                                <label>Empresa</label>
-                                <input type="text" class="form-control" placeholder="Empresa" required>
-                            </div>
-                            <div class="col-12">
-                                <label>Correo empresarial</label>
-                                <input type="email" class="form-control" placeholder="Email corporativo" required>
-                            </div>
-                            <div class="col-12">
-                                <label>Celular</label>
-                                <input type="tel" class="form-control" placeholder="Número de celular" required>
-                            </div>
-                            <div class="col-12">
-                                <label>Mensaje</label>
-                                <textarea class="form-control" rows="2" placeholder="Déjanos tu mensaje"></textarea>
-                            </div>
-                            <div class="col-12 mt-2">
-                                <button type="submit" class="btn btn-sf w-100 py-2">AGENDAR AHORA</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <!-- FORM HERO -->
+    <div class="form-card hero-fc" id="contacto">
+      <h3>Consultoría sin cargo</h3>
+      <p class="form-sub">Hablemos de tu negocio. Te respondemos en menos de 24 hs.</p>
+      <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5w000003XOQ6" method="POST">
+        <input type="hidden" name="oid" value="00D5w000003XOQ6">
+        <input type="hidden" name="retURL" value="https://cambalachetechnologies.github.io/agentforce/gracias">
+        <input type="hidden" name="lead_source" value="Foundations 052026">
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input name="first_name" type="text" placeholder="Nombre" required></div>
+          <div class="fg"><label>Apellido</label><input name="last_name" type="text" placeholder="Apellido" required></div>
         </div>
-    </header>
-
-    <section class="presence-dark text-center">
-        <div class="container">
-            <h5 class="text-uppercase mb-4" style="letter-spacing: 2px; color: var(--text-cyan); font-size: 0.9rem;">Líderes en implementación para Latinoamérica</h5>
-            <div class="d-flex flex-wrap justify-content-center gap-3">
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Argentina</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> México</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Chile</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Colombia</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Perú</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Uruguay</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Ecuador</span>
-                <span class="country-pill border border-secondary rounded-pill px-3 py-2"><span class="pulse-dot"></span> Panamá</span>
-            </div>
+        <div class="fg"><label>Email corporativo</label><input name="email" type="email" placeholder="nombre@empresa.com" required></div>
+        <div class="fg-row">
+          <div class="fg"><label>Empresa</label><input name="company" type="text" placeholder="Empresa" required></div>
+          <div class="fg"><label>Cargo</label><input name="title" type="text" placeholder="Tu cargo" required></div>
         </div>
-    </section>
-
-    <section id="agentforce" class="agentforce-universe">
-        <div class="container">
-            <div class="row mb-5 text-center">
-                <div class="col-lg-10 mx-auto">
-                    <h2 class="display-4 fw-800 mb-4 text-white">¿Qué es Agentforce?</h2>
-                    <p class="lead opacity-75">Agentforce es la nueva plataforma de agentes de inteligencia artificial de Salesforce que permite crear asistentes digitales capaces de responder consultas, automatizar tareas y ejecutar acciones dentro de tus sistemas.
-<br>Estos agentes pueden conectarse a tus datos y workflows para trabajar 24/7 como parte de tu equipo.</p>
-                </div>
-            </div>
-
-            <div class="row pt-5">
-                <div class="col-lg-4">
-                    <div class="nav flex-column nav-pills nav-pills-agent" id="agent-tabs" role="tablist">
-                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#tab-customer">Atención al Cliente</button>
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-sales">Desarrollo de Ventas</button>
-                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#tab-internal">Asistencia a Empleados</button>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="tab-content agent-card-tech">
-                        <div class="tab-pane fade show active" id="tab-customer">
-                            <h4 class="text-cyan mb-3">Servicio 24/7 de alta resolución</h4>
-                            <p>Optimiza la atención al cliente con agentes que resuelven casos de forma autónoma, complementando el trabajo humano con velocidad.</p>
-                            <div class="row mt-4">
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Resolución inmediata en primer contacto</small></div>
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Reducción drástica de costos operativos</small></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab-sales">
-                            <h4 class="text-cyan mb-3">Aceleración del Embudo Comercial</h4>
-                            <p>Impulsa el crecimiento con asistentes que califican leads y agendan reuniones, agilizando el ciclo comercial de tu equipo.</p>
-                            <div class="row mt-4">
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Tasas de ganancias elevadas</small></div>
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Ciclos de negocio cortos</small></div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="tab-internal">
-                            <h4 class="text-cyan mb-3">Eficiencia Operativa Interna</h4>
-                            <p>Empodera a tus empleados con agentes especializados que automatizan procesos administrativos y facilitan el acceso a información.</p>
-                            <div class="row mt-4">
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Aumento de la productividad</small></div>
-                                <div class="col-md-5 border-start border-cyan ms-2 mb-2"><small>Resolución interna acelerada</small></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="fg-row">
+          <div class="fg"><label>Teléfono</label><input name="mobile" type="tel" placeholder="+54 9 11..." required></div>
+          <div class="fg"><label>País</label><input name="country" type="text" placeholder="País" required></div>
         </div>
-    </section>
+        <button type="submit" name="submit" class="btn-submit">AGENDAR AHORA →</button>
+        <p class="form-note">Sin compromiso · Respondemos en &lt;24 hs hábiles</p>
+      </form>
+    </div>
+  </div>
+</section>
 
-    <section id="soluciones" class="py-5 bg-light">
-        <div class="container py-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-800 display-5 text-dark">Nuestro expertís</h2>
-                <p class="text-muted fs-5">Lideramos la implementación de Salesforce para transformar resultados de negocio.</p>
+<!-- LATAM -->
+<div class="latam">
+  <div class="latam-inner">
+    <span class="latam-label"><i class="bi bi-globe-americas me-1"></i>Líderes en implementación para:</span>
+    <div class="cpills">
+      <span class="cpill"><span class="pdot"></span>Argentina</span>
+      <span class="cpill"><span class="pdot"></span>México</span>
+      <span class="cpill"><span class="pdot"></span>Colombia</span>
+      <span class="cpill"><span class="pdot"></span>Chile</span>
+      <span class="cpill"><span class="pdot"></span>Perú</span>
+      <span class="cpill"><span class="pdot"></span>Uruguay</span>
+      <span class="cpill"><span class="pdot"></span>Ecuador</span>
+      <span class="cpill"><span class="pdot"></span>Panamá</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUÉ ES AGENTFORCE -->
+<section class="sec" id="agentforce">
+  <div class="wrap">
+    <span class="sec-label">¿Qué es Agentforce?</span>
+    <h2>La plataforma de agentes de IA<br><span>de Salesforce para tu equipo</span></h2>
+    <p class="sec-lead">Agentforce crea asistentes digitales capaces de responder consultas, automatizar tareas y ejecutar acciones dentro de tus sistemas — conectados a tus datos, trabajando 24/7.</p>
+
+    <div class="tab-layout">
+      <div class="tab-pills">
+        <button class="tab-pill active" onclick="switchTab(this,'customer')"><i class="bi bi-headset me-2"></i>Atención al Cliente</button>
+        <button class="tab-pill" onclick="switchTab(this,'sales')"><i class="bi bi-lightning-charge me-2"></i>Desarrollo de Ventas</button>
+        <button class="tab-pill" onclick="switchTab(this,'internal')"><i class="bi bi-people me-2"></i>Asistencia a Empleados</button>
+      </div>
+
+      <div>
+        <div class="agent-card tab-panel active" id="panel-customer">
+          <div class="agent-card-inner">
+            <h4>Servicio 24/7 de alta resolución</h4>
+            <p>Optimizá la atención al cliente con agentes que resuelven casos de forma autónoma, complementando el trabajo humano con velocidad y consistencia. El agente atiende, escala y resuelve — sin tiempos de espera.</p>
+            <div class="agent-bullets">
+              <div class="agent-bullet">Resolución inmediata en primer contacto</div>
+              <div class="agent-bullet">Reducción drástica de costos operativos</div>
+              <div class="agent-bullet">Escalado automático a agente humano</div>
+              <div class="agent-bullet">Disponible en todos los canales</div>
             </div>
-            <div class="row g-4 text-center">
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-cart4 service-icon"></i>
-                        <h4>Consumer Goods Cloud</h4>
-                        <p class="small text-muted">Optimiza la ejecución en el punto de venta y toma mejores decisiones de inventario mediante analítica predictiva.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-lightning-charge service-icon"></i>
-                        <h4>Sales Cloud CRM</h4>
-                        <p class="small text-muted">Aumenta la productividad comercial centralizando tus ventas y priorizando oportunidades con asistencia inteligente.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-headset service-icon"></i>
-                        <h4>Service Cloud</h4>
-                        <p class="small text-muted">Brinda soporte omnicanal excepcional y personaliza cada interacción para fidelizar a tus clientes de forma proactiva.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-robot service-icon"></i>
-                        <h4>Agentforce</h4>
-                        <p class="small text-muted">Escale su capacidad operativa con agentes de IA que razonan y actúan de forma autónoma dentro de su ecosistema.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-cloud-check service-icon"></i>
-                        <h4>Data Cloud</h4>
-                        <p class="small text-muted">Unifica todos tus datos en tiempo real para obtener una visión 360 del cliente y potenciar tu estrategia digital.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card service-card p-4">
-                        <i class="bi bi-boxes service-icon"></i>
-                        <h4>MuleSoft</h4>
-                        <p class="small text-muted">Integra cualquier aplicación o sistema para crear una infraestructura conectada, ágil y escalable.</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4 text-center text-lg-start">
-                    <div class="mb-4">
-                        <img src="img/logoctech.png" alt="Cambalache Technologies" style="height: 50px; filter: brightness(0) invert(1);">
-                    </div>
-                    <p class="small mt-3">Partner Regional Latam especializado en la transformación del negocio a través de Salesforce.</p>
-                </div>
-                <div class="col-lg-4 mb-4">
-                    <h5>Industrias</h5>
-                    <div class="row">
-                        <div class="col-6 small">
-                            <ul class="list-unstyled">
-                                <li>Consumer Goods</li>
-                                <li>High Tech</li>
-                                <li>Agriculture</li>
-                                <li>Health Care</li>
-                            </ul>
-                        </div>
-                        <div class="col-6 small">
-                            <ul class="list-unstyled">
-                                <li>Manufacturing</li>
-                                <li>Fintech</li>
-                                <li>Oil & Gas</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4 text-center text-lg-end">
-                    <h5>Contacto Regional</h5>
-                    <p class="small mb-1">Email: josefina.ceriani@c-tech.com.ar</p>
-                    <p class="small">Buenos Aires | Bogotá | Santiago</p>
-                </div>
+        <div class="agent-card tab-panel" id="panel-sales">
+          <div class="agent-card-inner">
+            <h4>Aceleración del Embudo Comercial</h4>
+            <p>Impulsá el crecimiento con asistentes que califican leads, recomiendan productos, agendan reuniones y hacen seguimiento — agilizando el ciclo comercial de tu equipo sin sumar personal.</p>
+            <div class="agent-bullets">
+              <div class="agent-bullet">Calificación automática de leads</div>
+              <div class="agent-bullet">Recomendaciones de upselling en tiempo real</div>
+              <div class="agent-bullet">Ciclos de negocio más cortos</div>
+              <div class="agent-bullet">Tasas de conversión elevadas</div>
             </div>
-            <div class="border-top border-secondary pt-4 text-center">
-                <p class="small mb-0 opacity-50">© 2026 Cambalache Technologies. Partner Consulting Salesforce Latam.</p>
-            </div>
+          </div>
         </div>
-    </footer>
+        <div class="agent-card tab-panel" id="panel-internal">
+          <div class="agent-card-inner">
+            <h4>Eficiencia Operativa Interna</h4>
+            <p>Empoderá a tus empleados con agentes especializados que automatizan procesos administrativos, facilitan el acceso a información y liberan tiempo para el trabajo de alto valor.</p>
+            <div class="agent-bullets">
+              <div class="agent-bullet">Aumento de productividad por empleado</div>
+              <div class="agent-bullet">Resolución interna acelerada</div>
+              <div class="agent-bullet">Acceso instantáneo a información clave</div>
+              <div class="agent-bullet">Menos papeleo y tareas manuales</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SOLUCIONES -->
+<section class="sec sec-alt" id="soluciones">
+  <div class="wrap">
+    <span class="sec-label">Nuestro expertís</span>
+    <h2>Lideramos la implementación<br><span>de Salesforce en Latam</span></h2>
+    <p class="sec-lead">Transformamos resultados de negocio con la suite completa de Salesforce, implementada con metodología probada en toda la región.</p>
+    <div class="solutions-grid">
+
+      <div class="sol-card">
+        <i class="bi bi-robot sol-icon"></i>
+        <h4>Agentforce</h4>
+        <p>Escalá tu capacidad operativa con agentes de IA que razonan y actúan de forma autónoma dentro de tu ecosistema de Salesforce.</p>
+        <a href="agentforce-consumer-goods.html" class="sol-link">Ver casos de uso <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="sol-card">
+        <i class="bi bi-cart4 sol-icon"></i>
+        <h4>Consumer Goods Cloud</h4>
+        <p>Optimizá la ejecución en el punto de venta y tomá mejores decisiones de inventario con analítica predictiva e IA.</p>
+        <a href="agentforce-consumer-goods.html" class="sol-link">Ver solución <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="sol-card">
+        <i class="bi bi-lightning-charge sol-icon"></i>
+        <h4>Sales Cloud CRM</h4>
+        <p>Aumentá la productividad comercial centralizando tus ventas y priorizando oportunidades con asistencia inteligente.</p>
+        <a href="#demo" class="sol-link">Hablar con un experto <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="sol-card">
+        <i class="bi bi-headset sol-icon"></i>
+        <h4>Service Cloud</h4>
+        <p>Brindá soporte omnicanal excepcional y personalizá cada interacción para fidelizar a tus clientes de forma proactiva.</p>
+        <a href="#demo" class="sol-link">Hablar con un experto <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="sol-card">
+        <i class="bi bi-cloud-check sol-icon"></i>
+        <h4>Data Cloud</h4>
+        <p>Unificá todos tus datos en tiempo real para obtener una visión 360° del cliente y potenciar tu estrategia digital.</p>
+        <a href="#demo" class="sol-link">Hablar con un experto <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="sol-card">
+        <i class="bi bi-boxes sol-icon"></i>
+        <h4>MuleSoft</h4>
+        <p>Integrá cualquier aplicación o sistema para crear una infraestructura conectada, ágil y escalable con más de 450 conectores.</p>
+        <a href="#demo" class="sol-link">Hablar con un experto <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO IMPLEMENTAMOS -->
+<section class="sec">
+  <div class="wrap">
+    <span class="sec-label">El proceso</span>
+    <h2>¿Cómo lo<br><span>implementamos?</span></h2>
+    <p class="sec-lead">Cuatro pasos para transformar tu operación con Salesforce y Agentforce — sin interrumpir tu negocio actual.</p>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-n">01</div>
+        <h4>Diagnóstico</h4>
+        <p>Analizamos tu operación, sistemas existentes y casos de uso con mayor impacto para diseñar la solución correcta.</p>
+        <div class="step-arrow"><i class="bi bi-chevron-right"></i></div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <h4>Diseño de solución</h4>
+        <p>Definimos la arquitectura, los agentes de IA, las integraciones necesarias y el roadmap de implementación.</p>
+        <div class="step-arrow"><i class="bi bi-chevron-right"></i></div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <h4>Implementación</h4>
+        <p>Configuramos Salesforce, conectamos tus sistemas vía MuleSoft y entrenamos los agentes con tus datos reales.</p>
+        <div class="step-arrow"><i class="bi bi-chevron-right"></i></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <h4>Adopción y escala</h4>
+        <p>Capacitamos a tu equipo, arrancamos en producción y expandimos con base en resultados medibles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIAS -->
+<section class="sec sec-alt" id="industrias">
+  <div class="wrap">
+    <span class="sec-label">Industrias</span>
+    <h2>Experiencia en<br><span>tu industria</span></h2>
+    <p class="sec-lead">Implementamos Salesforce y Agentforce en las principales industrias de Latinoamérica con casos de uso específicos para cada sector.</p>
+    <div class="ind-grid">
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-cart4"></i></span>
+        <h4>Consumer Goods</h4>
+        <p>Rutas, PDV, televentas y trade promotions</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-building-gear"></i></span>
+        <h4>Manufacturing</h4>
+        <p>Field service, mantenimiento y operaciones</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-cpu"></i></span>
+        <h4>High Tech</h4>
+        <p>Ventas complejas, soporte y renovaciones</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-heart-pulse"></i></span>
+        <h4>Health Care</h4>
+        <p>Atención al paciente y gestión comercial</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-tree-fill"></i></span>
+        <h4>Agriculture</h4>
+        <p>Distribución, campo y gestión de cuentas</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-bank"></i></span>
+        <h4>Fintech</h4>
+        <p>Onboarding, servicio y automatización</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-droplet-fill"></i></span>
+        <h4>Oil & Gas</h4>
+        <p>Operaciones de campo e integraciones</p>
+      </div>
+      <div class="ind-card">
+        <span class="ind-icon"><i class="bi bi-minecart-loaded"></i></span>
+        <h4>Minería e Industrial</h4>
+        <p>Field service y mantenimiento predictivo</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="demo">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="eyebrow" style="margin-bottom:18px; display:inline-flex;">
+        <span class="eyebrow-dot"></span>Consultoría sin cargo
+      </div>
+      <h2>¿Listo para implementar<br>Agentforce en<br><span>tu empresa?</span></h2>
+      <p>Hablemos de tu negocio. Un especialista de Cambalache te va a ayudar a identificar los casos de uso con mayor impacto y a diseñar el camino hacia la implementación.</p>
+      <div class="reassure">
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Consultoría gratuita y sin compromiso</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Hablás directo con un especialista certificado</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Presencia y soporte en toda Latinoamérica</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Te respondemos en menos de 24 horas hábiles</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <h3>Hablemos de tu proyecto</h3>
+      <p class="form-sub">Completá el formulario y te contactamos para coordinar la charla.</p>
+      <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5w000003XOQ6" method="POST">
+        <input type="hidden" name="oid" value="00D5w000003XOQ6">
+        <input type="hidden" name="retURL" value="https://cambalachetechnologies.github.io/agentforce/gracias">
+        <input type="hidden" name="lead_source" value="Foundations 052026">
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input name="first_name" type="text" placeholder="Tu nombre" required></div>
+          <div class="fg"><label>Apellido</label><input name="last_name" type="text" placeholder="Apellido" required></div>
+        </div>
+        <div class="fg"><label>Email corporativo</label><input name="email" type="email" placeholder="vos@empresa.com" required></div>
+        <div class="fg-row">
+          <div class="fg"><label>Empresa</label><input name="company" type="text" placeholder="Empresa" required></div>
+          <div class="fg"><label>Cargo</label><input name="title" type="text" placeholder="Tu cargo" required></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg"><label>Teléfono</label><input name="mobile" type="tel" placeholder="+54 9 11..." required></div>
+          <div class="fg"><label>País</label><input name="country" type="text" placeholder="País" required></div>
+        </div>
+        <button type="submit" name="submit" class="btn-submit">AGENDAR CONSULTORÍA →</button>
+        <p class="form-note">Sin compromiso · Respondemos en &lt;24 hs hábiles</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <img src="img/logoctech.png" alt="Cambalache Technologies" style="height:42px; filter:brightness(0) invert(1); margin-bottom:14px; display:block;">
+      <p>Partner Regional Latam especializado en la transformación del negocio a través de Salesforce.</p>
+      <p style="margin-top:12px;">josefina.ceriani@c-tech.com.ar</p>
+      <p>Buenos Aires · Bogotá · Santiago</p>
+    </div>
+    <div>
+      <h5>Industrias</h5>
+      <ul>
+        <li><a href="#">Consumer Goods</a></li>
+        <li><a href="#">High Tech</a></li>
+        <li><a href="#">Manufacturing</a></li>
+        <li><a href="#">Health Care</a></li>
+        <li><a href="#">Agriculture</a></li>
+        <li><a href="#">Fintech</a></li>
+        <li><a href="#">Oil & Gas</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Contacto Regional</h5>
+      <p>josefina.ceriani@c-tech.com.ar</p>
+      <p style="margin-top:8px;">Buenos Aires | Bogotá | Santiago</p>
+      <div style="display:flex; gap:10px; margin-top:16px;">
+        <a href="#" style="display:flex; align-items:center; gap:6px; border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:6px 14px; font-size:0.8rem; color:var(--muted);"><i class="bi bi-linkedin"></i> LinkedIn</a>
+        <a href="#" style="display:flex; align-items:center; gap:6px; border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:6px 14px; font-size:0.8rem; color:var(--muted);"><i class="bi bi-youtube"></i> YouTube</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    © 2026 Cambalache Technologies · Partner Consulting Salesforce Latam · Salesforce y Agentforce son marcas registradas de Salesforce, Inc.
+  </div>
+</footer>
+
+<script>
+function switchTab(btn, id) {
+  document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + id).classList.add('active');
+}
+</script>
+
 </body>
 </html>
