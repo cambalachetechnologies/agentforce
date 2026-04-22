@@ -457,9 +457,9 @@ footer ul li { margin-bottom: 7px; }
 <nav>
   <div class="nav-inner">
     <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="../img/logoctech.png" alt="Cambalache Logo">
+      <img src="img/logoctech.png" alt="Cambalache Logo">
       <span class="navbar-partner">
-        <img src="../img/partnerlogo.png" alt="Salesforce Partner Logo">
+        <img src="img/partnerlogo.png" alt="Salesforce Partner Logo">
       </span>
     </a>
     <ul class="nav-links">
@@ -513,35 +513,24 @@ footer ul li { margin-bottom: 7px; }
     <div class="form-card hero-fc" id="contacto">
       <h3>Agendá una demo gratis</h3>
       <p class="form-sub">Te mostramos cómo funciona aplicado a tu operación. Sin compromiso, sin jerga técnica.</p>
-      <form>
+      <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5w000003XOQ6" method="POST">
+        <input type="hidden" name="oid" value="00D5w000003XOQ6">
+        <input type="hidden" name="retURL" value="https://cambalachetechnologies.github.io/workshop/subpaginas/gracias">
+        <input type="hidden" name="lead_source" value="Foundations 052026">
         <div class="fg-row">
-          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
-          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+          <div class="fg"><label>Nombre</label><input name="first_name" type="text" placeholder="Tu nombre" required></div>
+          <div class="fg"><label>Apellido</label><input name="last_name" type="text" placeholder="Apellido" required></div>
         </div>
-        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de tu empresa"></div>
-        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="nombre@empresa.com"></div>
-        <div class="fg">
-          <label>País</label>
-          <select>
-            <option value="">Seleccioná tu país</option>
-            <option>Argentina</option><option>México</option><option>Colombia</option>
-            <option>Chile</option><option>Perú</option><option>Uruguay</option>
-            <option>Ecuador</option><option>Panamá</option><option>Otro</option>
-          </select>
+        <div class="fg"><label>Email de trabajo</label><input name="email" type="email" placeholder="nombre@empresa.com" required></div>
+        <div class="fg-row">
+          <div class="fg"><label>Empresa</label><input name="company" type="text" placeholder="Empresa" required></div>
+          <div class="fg"><label>Cargo</label><input name="title" type="text" placeholder="Tu cargo" required></div>
         </div>
-        <div class="fg">
-          <label>¿Cuál es tu mayor problema hoy?</label>
-          <select>
-            <option value="">Seleccioná una opción</option>
-            <option>No sé dónde está mi equipo de campo</option>
-            <option>Muchas visitas que no resuelven el problema</option>
-            <option>Equipos que se rompen sin aviso</option>
-            <option>Demasiado papeleo y coordinación manual</option>
-            <option>No tengo visibilidad de lo que pasa en campo</option>
-            <option>Otro</option>
-          </select>
+        <div class="fg-row">
+          <div class="fg"><label>Teléfono</label><input name="mobile" type="tel" placeholder="+54 9 11..." required></div>
+          <div class="fg"><label>País</label><input name="country" type="text" placeholder="País" required></div>
         </div>
-        <button type="submit" class="btn-submit">QUIERO VER LA DEMO →</button>
+        <button type="submit" name="submit" class="btn-submit">QUIERO VER LA DEMO →</button>
         <p class="form-note">Te respondemos en menos de 24 hs · Sin compromiso</p>
       </form>
     </div>
@@ -675,28 +664,24 @@ footer ul li { margin-bottom: 7px; }
     <div class="form-card">
       <h3>Pedí tu demo</h3>
       <p class="form-sub">Completá el formulario y te contactamos para coordinar la videollamada.</p>
-      <form>
+      <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D5w000003XOQ6" method="POST">
+        <input type="hidden" name="oid" value="00D5w000003XOQ6">
+        <input type="hidden" name="retURL" value="https://cambalachetechnologies.github.io/workshop/subpaginas/gracias">
+        <input type="hidden" name="lead_source" value="Foundations 052026">
         <div class="fg-row">
-          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
-          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+          <div class="fg"><label>Nombre</label><input name="first_name" type="text" placeholder="Tu nombre" required></div>
+          <div class="fg"><label>Apellido</label><input name="last_name" type="text" placeholder="Apellido" required></div>
         </div>
-        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
-        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="vos@empresa.com"></div>
-        <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+54 9 11..."></div>
-        <div class="fg">
-          <label>¿Qué industria?</label>
-          <select>
-            <option value="">Seleccioná tu industria</option>
-            <option>Minería</option>
-            <option>Manufactura / Industrial</option>
-            <option>Oil & Gas</option>
-            <option>Agro / Alimentaria</option>
-            <option>Construcción / Utilities</option>
-            <option>Consumer Goods / Distribución</option>
-            <option>Otra</option>
-          </select>
+        <div class="fg"><label>Email de trabajo</label><input name="email" type="email" placeholder="vos@empresa.com" required></div>
+        <div class="fg-row">
+          <div class="fg"><label>Empresa</label><input name="company" type="text" placeholder="Empresa" required></div>
+          <div class="fg"><label>Cargo</label><input name="title" type="text" placeholder="Tu cargo" required></div>
         </div>
-        <button type="submit" class="btn-submit">QUIERO LA DEMO GRATIS →</button>
+        <div class="fg-row">
+          <div class="fg"><label>Teléfono</label><input name="mobile" type="tel" placeholder="+54 9 11..." required></div>
+          <div class="fg"><label>País</label><input name="country" type="text" placeholder="País" required></div>
+        </div>
+        <button type="submit" name="submit" class="btn-submit">QUIERO LA DEMO GRATIS →</button>
         <p class="form-note">Sin compromiso · Respondemos en &lt;24 hs hábiles</p>
       </form>
     </div>
@@ -707,7 +692,7 @@ footer ul li { margin-bottom: 7px; }
 <footer>
   <div class="foot-inner">
     <div>
-      <div class="foot-brand">Cambalache<span>.</span>tech</div>
+      <div class="foot-brand"><img src="img/logoctech.png" alt="Cambalache Technologies" style="height:36px; filter:brightness(0) invert(1);"></div>
       <p>Partner Consulting Regional de Salesforce. Especialistas en operaciones de campo e industria consumer goods en Latinoamérica.</p>
       <p style="margin-top:12px;">josefina.ceriani@c-tech.com.ar</p>
       <p>Buenos Aires · Bogotá · Santiago</p>
