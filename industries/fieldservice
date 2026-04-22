@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu operación de campo, automatizada | Cambalache Technologies</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --sf-blue:    #00A1E0;
+  --sf-dark:    #032d60;
+  --sf-navy:    #01162d;
+  --cyan:       #00ffcc;
+  --cyan-dim:   rgba(0, 255, 204, 0.10);
+  --cyan-border:rgba(0, 255, 204, 0.28);
+  --white:      #ffffff;
+  --body-text:  rgba(255,255,255,0.80);
+  --muted:      rgba(255,255,255,0.45);
+  --glass:      rgba(255,255,255,0.04);
+  --glass-b:    rgba(255,255,255,0.09);
+  --iron:       rgba(255,255,255,0.10);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--sf-navy);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--sf-dark);
+  font-size: 0.78rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.topbar .wrap {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar a { color: rgba(255,255,255,0.7); text-decoration: none; margin-left: 16px; }
+.topbar a:hover { color: var(--cyan); }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 99;
+  background: rgba(1,22,45,0.95);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--glass-b);
+  padding: 14px 0;
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand {
+  font-size: 1.05rem; font-weight: 800;
+  text-decoration: none; color: var(--white);
+  letter-spacing: -0.02em;
+}
+.nav-brand span { color: var(--cyan); }
+.navbar-brand { text-decoration: none; display: flex; align-items: center; }
+.navbar-brand img { height: 38px; }
+.navbar-partner { display: flex; align-items: center; }
+.navbar-partner img { height: 54px; margin-left: 8px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cta {
+  background: var(--sf-blue); color: var(--white);
+  border-radius: 50px; padding: 9px 22px;
+  font-size: 0.82rem; font-weight: 700;
+  text-decoration: none; transition: background 0.2s, transform 0.15s;
+}
+.nav-cta:hover { background: #0084b8; transform: scale(1.02); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 90vh; display: flex; align-items: center;
+  padding: 80px 0 60px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 70% at 65% 35%, rgba(0,161,224,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 15% 85%, rgba(0,255,204,0.06) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.03;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 55px 55px;
+}
+.hero-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 430px;
+  gap: 56px; align-items: center; position: relative; z-index: 2;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--cyan-dim); border: 1px solid var(--cyan-border);
+  border-radius: 50px; padding: 5px 14px; margin-bottom: 22px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; background: var(--cyan); border-radius: 50%;
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pdot 2s ease-in-out infinite;
+}
+@keyframes pdot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.75);} }
+
+.hero h1 {
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.03em; margin-bottom: 22px;
+}
+.hero h1 em { font-style: normal; color: var(--cyan); display: block; }
+
+.hero-desc {
+  font-size: 1.05rem; line-height: 1.72;
+  color: var(--body-text); margin-bottom: 34px; max-width: 520px;
+}
+.hero-desc strong { color: var(--white); font-weight: 600; }
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--sf-blue); color: var(--white);
+  border-radius: 50px; padding: 13px 26px;
+  font-size: 0.88rem; font-weight: 700;
+  text-decoration: none; border: none; cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: #0084b8; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent; color: var(--white);
+  border: 1px solid var(--glass-b); border-radius: 50px;
+  padding: 13px 26px; font-size: 0.88rem; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.hero-proof {
+  margin-top: 44px; padding-top: 32px;
+  border-top: 1px solid var(--glass-b);
+  display: flex; gap: 36px; flex-wrap: wrap;
+}
+.proof-num {
+  font-size: 2.2rem; font-weight: 800;
+  color: var(--cyan); line-height: 1;
+}
+.proof-label { font-size: 0.78rem; color: var(--muted); line-height: 1.45; margin-top: 4px; max-width: 115px; }
+
+/* ── FORM CARD ── */
+.form-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-b);
+  border-top: 3px solid var(--sf-blue);
+  border-radius: 16px; padding: 30px 26px;
+}
+.form-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+.form-card .form-sub { font-size: 0.82rem; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+.fg { margin-bottom: 10px; }
+.fg label {
+  display: block; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px;
+}
+.fg input, .fg select {
+  width: 100%; background: rgba(255,255,255,0.06);
+  border: 1px solid var(--glass-b); border-radius: 8px;
+  padding: 9px 13px; color: var(--white);
+  font-family: 'Inter', sans-serif; font-size: 0.87rem;
+  outline: none; transition: border-color 0.2s;
+  appearance: none;
+}
+.fg input:focus, .fg select:focus { border-color: var(--sf-blue); }
+.fg input::placeholder { color: rgba(255,255,255,0.22); }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn-submit {
+  width: 100%; background: var(--sf-blue); color: var(--white);
+  border: none; border-radius: 50px; padding: 12px;
+  font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; margin-top: 6px; letter-spacing: 0.01em;
+  transition: background 0.2s;
+}
+.btn-submit:hover { background: #0084b8; }
+.form-note { font-size: 0.71rem; color: var(--muted); text-align: center; margin-top: 8px; }
+
+/* ── SECTION BASE ── */
+.sec { padding: 88px 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.sec-label {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--sf-blue); margin-bottom: 10px;
+}
+.sec h2 {
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.08; margin-bottom: 16px;
+}
+.sec h2 span { color: var(--cyan); }
+.sec-lead {
+  font-size: 1.02rem; color: var(--body-text);
+  line-height: 1.72; max-width: 600px;
+}
+.sec-alt { background: rgba(3,45,96,0.35); border-top: 1px solid var(--glass-b); border-bottom: 1px solid var(--glass-b); }
+
+/* ── LATAM STRIP ── */
+.latam {
+  background: var(--sf-dark);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 32px 0;
+}
+.latam-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.latam-label {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cyan); white-space: nowrap;
+}
+.cpills { display: flex; flex-wrap: wrap; gap: 8px; }
+.cpill {
+  border: 1px solid var(--glass-b); border-radius: 50px;
+  padding: 5px 14px; font-size: 0.82rem; color: var(--body-text);
+  display: flex; align-items: center; gap: 7px;
+}
+.pdot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cyan); box-shadow: 0 0 7px var(--cyan);
+  animation: pdot 2.2s ease-in-out infinite;
+}
+
+/* ── METRICS STRIP ── */
+.metrics {
+  background: rgba(0,161,224,0.07);
+  border-top: 1px solid rgba(0,161,224,0.15);
+  border-bottom: 1px solid rgba(0,161,224,0.15);
+  padding: 44px 0;
+}
+.metrics-grid {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 20px;
+  text-align: center;
+}
+.m-num { font-size: 2.8rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+.m-pct { font-size: 1.6rem; color: var(--sf-blue); }
+.m-label { font-size: 0.8rem; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+
+/* ── ANALOGY CARDS ── */
+.analogy-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 20px; margin-top: 50px;
+}
+.a-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-b); border-radius: 14px;
+  padding: 28px 24px; position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.a-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--sf-blue), var(--cyan));
+  opacity: 0; transition: opacity 0.3s;
+}
+.a-card:hover { border-color: rgba(0,161,224,0.4); transform: translateY(-4px); }
+.a-card:hover::before { opacity: 1; }
+.a-num {
+  font-size: 3.5rem; font-weight: 800;
+  color: rgba(0,255,204,0.08); line-height: 1;
+  position: absolute; top: 12px; right: 18px;
+}
+.a-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+.a-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
+.a-card p { font-size: 0.85rem; color: var(--body-text); line-height: 1.65; }
+.a-highlight {
+  display: block; margin-top: 14px;
+  background: var(--cyan-dim); border-left: 3px solid var(--cyan);
+  padding: 8px 12px; font-size: 0.8rem;
+  color: var(--cyan); font-style: italic; line-height: 1.45;
+}
+
+/* ── BEFORE / AFTER ── */
+.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 50px; }
+.ba-col h4 {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 18px; padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-b);
+}
+.ba-col h4.bad  { color: rgba(255,100,100,0.75); }
+.ba-col h4.good { color: var(--cyan); }
+.ba-row {
+  display: flex; gap: 13px; align-items: flex-start;
+  padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.dot-bad  { width:8px; height:8px; border-radius:50%; background:rgba(255,100,100,0.6); flex-shrink:0; margin-top:5px; }
+.dot-good { width:8px; height:8px; border-radius:50%; background:var(--cyan);           flex-shrink:0; margin-top:5px; }
+.ba-row p { font-size: 0.88rem; color: var(--body-text); line-height: 1.58; }
+.ba-row p strong { color: var(--white); font-weight: 600; display: block; margin-bottom: 2px; }
+
+/* ── USE CASES ── */
+.uses-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  gap: 16px; margin-top: 50px;
+}
+.use-card {
+  background: var(--glass); border: 1px solid var(--glass-b);
+  border-radius: 14px; padding: 26px 24px;
+  display: flex; gap: 18px; align-items: flex-start;
+  transition: border-color 0.25s, background 0.25s;
+}
+.use-card:hover { border-color: rgba(0,161,224,0.4); background: rgba(0,161,224,0.05); }
+.use-n {
+  font-size: 2rem; font-weight: 800; color: var(--glass-b);
+  line-height: 1; flex-shrink: 0; min-width: 40px;
+  transition: color 0.25s;
+}
+.use-card:hover .use-n { color: var(--sf-blue); }
+.use-body h4 { font-size: 0.97rem; font-weight: 700; margin-bottom: 7px; line-height: 1.25; }
+.use-body p { font-size: 0.83rem; color: var(--body-text); line-height: 1.62; }
+.use-tag {
+  display: inline-block; margin-top: 10px;
+  background: var(--cyan-dim); border: 1px solid var(--cyan-border);
+  border-radius: 50px; padding: 3px 11px;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--cyan);
+}
+
+/* ── STEPS ── */
+.steps-grid {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 0; margin-top: 50px;
+  border: 1px solid var(--glass-b); border-radius: 14px; overflow: hidden;
+}
+.step {
+  padding: 30px 24px;
+  border-right: 1px solid var(--glass-b);
+  position: relative;
+}
+.step:last-child { border-right: none; }
+.step-n {
+  font-size: 2.6rem; font-weight: 800; color: var(--sf-blue);
+  line-height: 1; margin-bottom: 12px;
+}
+.step h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.step p { font-size: 0.82rem; color: var(--muted); line-height: 1.58; }
+.step-arrow {
+  position: absolute; right: -14px; top: 32px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--sf-navy); border: 1px solid var(--sf-blue);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: var(--sf-blue); z-index: 2;
+}
+
+/* ── INDUSTRIES ── */
+.ind-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 16px; margin-top: 50px;
+}
+.ind-card {
+  background: var(--glass); border: 1px solid var(--glass-b);
+  border-radius: 14px; padding: 24px 22px;
+  transition: border-color 0.25s, background 0.25s;
+}
+.ind-card:hover { border-color: rgba(0,255,204,0.3); background: var(--cyan-dim); }
+.ind-icon { font-size: 1.8rem; display: block; margin-bottom: 13px; }
+.ind-card h4 { font-size: 0.97rem; font-weight: 700; margin-bottom: 8px; }
+.ind-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.58; }
+
+/* ── CTA FINAL ── */
+.cta-final {
+  background: linear-gradient(135deg, rgba(3,45,96,0.8) 0%, rgba(0,161,224,0.08) 100%);
+  border-top: 1px solid rgba(0,161,224,0.2); padding: 88px 0;
+}
+.cta-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 56px; align-items: start;
+}
+.cta-left h2 { font-size: clamp(2rem,3.5vw,3.2rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px; }
+.cta-left h2 span { color: var(--cyan); }
+.cta-left p { font-size: 1rem; color: var(--body-text); line-height: 1.7; margin-bottom: 26px; }
+.reassure { display: flex; flex-direction: column; gap: 8px; }
+.reassure-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.85rem; color: var(--muted);
+}
+.reassure-row i { color: var(--cyan); font-size: 0.85rem; flex-shrink: 0; }
+
+/* ── FOOTER ── */
+footer {
+  background: #010b16;
+  border-top: 1px solid var(--glass-b);
+  padding: 52px 0 20px;
+}
+.foot-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 40px; margin-bottom: 36px;
+}
+.foot-brand { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; }
+.foot-brand span { color: var(--cyan); }
+footer p, footer a { font-size: 0.83rem; color: var(--muted); text-decoration: none; line-height: 1.72; }
+footer a:hover { color: var(--sf-blue); }
+footer h5 {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 14px;
+}
+footer ul { list-style: none; }
+footer ul li { margin-bottom: 7px; }
+.foot-bottom {
+  max-width: 1200px; margin: 0 auto; padding: 18px 24px 0;
+  border-top: 1px solid var(--glass-b);
+  font-size: 0.75rem; color: rgba(255,255,255,0.22); text-align: center;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:920px){
+  .hero-inner, .cta-inner { grid-template-columns: 1fr; }
+  .form-card.hero-fc { display: none; }
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .analogy-grid { grid-template-columns: 1fr; }
+  .ba-grid { grid-template-columns: 1fr; }
+  .uses-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; border-radius: 14px; }
+  .step { border-right: none; border-bottom: 1px solid var(--glass-b); }
+  .step-arrow { display: none; }
+  .ind-grid { grid-template-columns: 1fr 1fr; }
+  .foot-inner { grid-template-columns: 1fr; gap: 24px; }
+  nav .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="img/logoctech.png" alt="Cambalache Logo">
+      <span class="navbar-partner">
+        <img src="img/partnerlogo.png" alt="Salesforce Partner Logo">
+      </span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#que-es">¿Qué es?</a></li>
+      <li><a href="#problemas">El Problema</a></li>
+      <li><a href="#usos">Para qué sirve</a></li>
+      <li><a href="#industrias">Industrias</a></li>
+    </ul>
+    <a href="#demo" class="nav-cta">Hablar con un Especialista</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner wrap">
+    <div>
+      <div class="eyebrow">
+        <span class="eyebrow-dot"></span>
+        Agentforce Field Service · Salesforce
+      </div>
+      <h1>
+        Tu operación<br>de campo,<br>
+        <em>automatizada.</em>
+      </h1>
+      <p class="hero-desc">
+        Imaginá tener un <strong>asistente inteligente</strong> que agenda visitas, avisa antes de que falle un equipo y guía a tus técnicos en campo — todo solo, las 24 horas. Eso es lo que hacemos con Agentforce de Salesforce.
+      </p>
+      <div class="hero-btns">
+        <a href="#demo" class="btn-primary"><i class="bi bi-play-circle-fill"></i> Quiero ver cómo funciona</a>
+        <a href="#que-es" class="btn-ghost"><i class="bi bi-question-circle"></i> ¿Qué es Agentforce?</a>
+      </div>
+      <div class="hero-proof">
+        <div>
+          <div class="proof-num">31%</div>
+          <p class="proof-label">Menos visitas fallidas al primer intento</p>
+        </div>
+        <div>
+          <div class="proof-num">32%</div>
+          <p class="proof-label">Más trabajo resuelto por técnico al día</p>
+        </div>
+        <div>
+          <div class="proof-num">26%</div>
+          <p class="proof-label">Menos desplazamientos innecesarios</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card hero-fc" id="contacto">
+      <h3>Agendá una demo gratis</h3>
+      <p class="form-sub">Te mostramos cómo funciona aplicado a tu operación. Sin compromiso, sin jerga técnica.</p>
+      <form>
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+        </div>
+        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de tu empresa"></div>
+        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="nombre@empresa.com"></div>
+        <div class="fg">
+          <label>País</label>
+          <select>
+            <option value="">Seleccioná tu país</option>
+            <option>Argentina</option><option>México</option><option>Colombia</option>
+            <option>Chile</option><option>Perú</option><option>Uruguay</option>
+            <option>Ecuador</option><option>Panamá</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>¿Cuál es tu mayor problema hoy?</label>
+          <select>
+            <option value="">Seleccioná una opción</option>
+            <option>No sé dónde está mi equipo de campo</option>
+            <option>Muchas visitas que no resuelven el problema</option>
+            <option>Equipos que se rompen sin aviso</option>
+            <option>Demasiado papeleo y coordinación manual</option>
+            <option>No tengo visibilidad de lo que pasa en campo</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">QUIERO VER LA DEMO →</button>
+        <p class="form-note">Te respondemos en menos de 24 hs · Sin compromiso</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ ES -->
+<section class="sec" id="que-es">
+  <div class="wrap">
+    <p class="sec-label">Para entender de qué hablamos</p>
+    <h2>¿Qué es Agentforce?<br><span>En palabras simples.</span></h2>
+    <p class="sec-lead">Nada de inteligencia artificial abstracta. Una explicación concreta para quienes gestionan operaciones reales — no para programadores.</p>
+    <div class="analogy-grid">
+      <div class="a-card">
+        <span class="a-num">1</span>
+        <span class="a-icon"><i class="bi bi-robot"></i></span>
+        <h3>Es como contratar un empleado que nunca descansa</h3>
+        <p>Un agente de IA hace tareas por vos: llama a un cliente, agenda una visita técnica, revisa si un equipo está funcionando bien. Lo hace solo, sin que nadie se lo pida, las 24 horas.</p>
+        <span class="a-highlight">Como un despachador que trabaja de noche y nunca se olvida de nada.</span>
+      </div>
+      <div class="a-card">
+        <span class="a-num">2</span>
+        <span class="a-icon"><i class="bi bi-wifi"></i></span>
+        <h3>Está conectado a todos tus datos y sistemas</h3>
+        <p>Lee tu historial de equipos, sabe quién está disponible, conoce la ruta más eficiente y tiene tus órdenes de trabajo. No trabaja en el vacío — trabaja con la información real de tu empresa.</p>
+        <span class="a-highlight">Como un técnico veterano que ya conoce todos tus activos de memoria.</span>
+      </div>
+      <div class="a-card">
+        <span class="a-num">3</span>
+        <span class="a-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        <h3>Toma decisiones y actúa, no solo avisa</h3>
+        <p>No es un chatbot que responde preguntas. Detecta que una bomba va a fallar, programa el mantenimiento, avisa al técnico más cercano y le manda las instrucciones — todo solo.</p>
+        <span class="a-highlight">Como pasar del "me llegó una alarma" al "ya lo estamos solucionando".</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USOS -->
+<section class="sec" id="usos">
+  <div class="wrap">
+    <p class="sec-label">Para qué sirve concretamente</p>
+    <h2>8 cosas que Agentforce<br><span>hace por tu equipo</span></h2>
+    <p class="sec-lead">Sin tecnicismos. Los usos concretos que aplican a empresas industriales, mineras y de manufactura.</p>
+    <div class="uses-grid">
+      <div class="use-card">
+        <div class="use-n">01</div>
+        <div class="use-body">
+          <h4>Agenda visitas técnicas solo, a cualquier hora</h4>
+          <p>Un cliente llama a las 10 de la noche, el agente da turno, asigna al técnico disponible más cercano con las habilidades correctas y le manda los datos del trabajo. Sin que nadie toque el teléfono.</p>
+          <span class="use-tag">Agendamiento 24/7</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">02</div>
+        <div class="use-body">
+          <h4>Avisa antes de que falle un equipo</h4>
+          <p>Monitorea vibración, temperatura u horas de uso. Cuando un parámetro se sale de rango, programa el mantenimiento solo. Sin esperar a que se rompa.</p>
+          <span class="use-tag">Mantenimiento Predictivo</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">03</div>
+        <div class="use-body">
+          <h4>Guía al técnico paso a paso en campo</h4>
+          <p>El técnico habla con el agente por voz desde el sitio. Le dice qué hacer según el manual del equipo, el historial de fallas y las instrucciones de seguridad. Como tener al experto al lado.</p>
+          <span class="use-tag">Asistencia en Sitio</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">04</div>
+        <div class="use-body">
+          <h4>Muestra dónde está todo tu equipo en tiempo real</h4>
+          <p>Mapa en vivo con la ubicación, estado y tarea actual de cada técnico. Desde tu oficina o el celular. Sin llamar a nadie para saber qué está pasando.</p>
+          <span class="use-tag">Visibilidad en Tiempo Real</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">05</div>
+        <div class="use-body">
+          <h4>Conecta con un experto remoto por video</h4>
+          <p>Si el técnico en campo no puede resolver el problema, con un toque conecta con un experto que ve exactamente lo mismo por la cámara y lo guía. Muchas veces evita enviar un segundo técnico.</p>
+          <span class="use-tag">Soporte Remoto Visual</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">06</div>
+        <div class="use-body">
+          <h4>Genera los partes de trabajo sin escribir nada</h4>
+          <p>El técnico habla al terminar la tarea. El agente escribe el informe, registra los materiales usados y cierra la orden de trabajo. Cero papeleo, cero planillas en papel.</p>
+          <span class="use-tag">Documentación por Voz</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">07</div>
+        <div class="use-body">
+          <h4>Funciona en minas y zonas sin internet</h4>
+          <p>En lugares remotos o con mala señal, la app funciona igual. Guarda todo y sincroniza cuando vuelve la conexión. No hay excusas para no registrar la información.</p>
+          <span class="use-tag">Modo Sin Conexión</span>
+        </div>
+      </div>
+      <div class="use-card">
+        <div class="use-n">08</div>
+        <div class="use-body">
+          <h4>Se conecta con tu ERP y sistemas actuales</h4>
+          <p>Salesforce no reemplaza lo que ya tenés — se conecta. SAP, sistemas propios, Excel avanzado. La información fluye entre todos los sistemas sin trabajo manual de nadie.</p>
+          <span class="use-tag">Integración Total</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="demo">
+  <div class="cta-inner">
+    <div class="cta-left">
+      <div class="eyebrow" style="margin-bottom:18px;">
+        <span class="eyebrow-dot"></span>Sin compromiso
+      </div>
+      <h2>¿Querés ver cómo funciona<br><span>en tu empresa?</span></h2>
+      <p>Te hacemos una demo con un caso real similar al tuyo. Sin presentaciones genéricas. Te mostramos la herramienta funcionando y qué cambiaría en tu operación específica.</p>
+      <div class="reassure">
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Es gratis y sin compromiso</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> La demo dura 45 minutos por videollamada</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Hablás directo con un especialista en field service</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> Te respondemos en menos de 24 horas hábiles</div>
+        <div class="reassure-row"><i class="bi bi-check-circle-fill"></i> No necesitás saber nada de tecnología para la charla</div>
+      </div>
+    </div>
+    <div class="form-card">
+      <h3>Pedí tu demo</h3>
+      <p class="form-sub">Completá el formulario y te contactamos para coordinar la videollamada.</p>
+      <form>
+        <div class="fg-row">
+          <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+          <div class="fg"><label>Apellido</label><input type="text" placeholder="Apellido"></div>
+        </div>
+        <div class="fg"><label>Empresa</label><input type="text" placeholder="Nombre de la empresa"></div>
+        <div class="fg"><label>Email de trabajo</label><input type="email" placeholder="vos@empresa.com"></div>
+        <div class="fg"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="+54 9 11..."></div>
+        <div class="fg">
+          <label>¿Qué industria?</label>
+          <select>
+            <option value="">Seleccioná tu industria</option>
+            <option>Minería</option>
+            <option>Manufactura / Industrial</option>
+            <option>Oil & Gas</option>
+            <option>Agro / Alimentaria</option>
+            <option>Construcción / Utilities</option>
+            <option>Consumer Goods / Distribución</option>
+            <option>Otra</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-submit">QUIERO LA DEMO GRATIS →</button>
+        <p class="form-note">Sin compromiso · Respondemos en &lt;24 hs hábiles</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">Cambalache<span>.</span>tech</div>
+      <p>Partner Consulting Regional de Salesforce. Especialistas en operaciones de campo e industria consumer goods en Latinoamérica.</p>
+      <p style="margin-top:12px;">josefina.ceriani@c-tech.com.ar</p>
+      <p>Buenos Aires · Bogotá · Santiago</p>
+    </div>
+    <div>
+      <h5>Soluciones</h5>
+      <ul>
+        <li><a href="#">Agentforce Field Service</a></li>
+        <li><a href="#">Consumer Goods Cloud</a></li>
+        <li><a href="#">Sales Cloud CRM</a></li>
+        <li><a href="#">Service Cloud</a></li>
+        <li><a href="#">MuleSoft</a></li>
+        <li><a href="#">Data Cloud</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Industrias</h5>
+      <ul>
+        <li><a href="#">Minería</a></li>
+        <li><a href="#">Manufactura</a></li>
+        <li><a href="#">Oil & Gas</a></li>
+        <li><a href="#">Consumer Goods</a></li>
+        <li><a href="#">Agriculture</a></li>
+        <li><a href="#">Health Care</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    © 2026 Cambalache Technologies · Partner Consulting Salesforce Latam · Salesforce y Agentforce son marcas registradas de Salesforce, Inc.
+  </div>
+</footer>
+
+</body>
+</html>
